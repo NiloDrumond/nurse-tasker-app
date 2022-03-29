@@ -19,9 +19,11 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "react/function-component-definition": "off",
     "prettier/prettier": "error",
     "import/no-unresolved": "warn",
     "no-plusplus": "off",
+    "camelcase": "off",
     "lines-between-class-members": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -47,8 +49,10 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".ts", ".tsx", ".native.js"]
-      }
+        "extensions": [".js", ".ts", ".tsx", ".native.js"],
+        "moduleDirectory": ["src", "node_modules"]
+      },
+      "typescript": {}
     }
   }
 }

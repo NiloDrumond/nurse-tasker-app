@@ -1,5 +1,5 @@
 Arguments: 
-  /home/nilo/.nvm/versions/node/v16.13.0/bin/node /usr/share/yarn/bin/yarn.js add -D @types/native-base
+  /home/nilo/.nvm/versions/node/v16.13.0/bin/node /usr/share/yarn/bin/yarn.js add @react-navigation
 
 PATH: 
   /home/nilo/.cabal/bin:/home/nilo/.ghcup/bin:/home/nilo/.zinit/polaris/sbin:/home/nilo/.zinit/polaris/bin:/home/nilo/.nvm/versions/node/v16.13.0/bin:/home/nilo/.asdf/shims:/home/nilo/.asdf/bin::/home/nilo/.npm-global/bin:/home/nilo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nilo/.dotnet/tools:/home/nilo/Android/Sdk/emulator:/home/nilo/Android/Sdk/tools:/home/nilo/Android/Sdk/tools/bin:/home/nilo/Android/Sdk/platform-tools:/home/nilo/android-studio/bin:/usr/bin/dotnet:/home/nilo/.yarn/bin:/usr/bin/python:/home/nilo/.local/bin:/usr/lib/postgresql/13/bin:/home/nilo/Tools/idea-IC-212.5457.46/bin
@@ -14,8 +14,8 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fnative-base: Not found
-      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66988:18)
+  Error: https://registry.yarnpkg.com/@react-navigation: Request "https://registry.yarnpkg.com/@react-navigation" returned a 405
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66997:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140749:22)
       at Request.emit (node:events:390:28)
       at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141721:10)
