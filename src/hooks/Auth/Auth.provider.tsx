@@ -17,14 +17,12 @@ import {
 import ManageInterceptors from '@/modules/shared/http/ManageInterceptors';
 
 import handleError from '@/utils/errors/handleError';
-import { AuthStorageData } from '@/modules/security/domain/interfaces';
-import checkToken from '@/utils/auth/tokenValidator';
 import {
-  IAuthContextData,
-  PreviousLoginData,
-  AuthStateParams,
+  AuthStorageData,
   SignInParams,
-} from './IAuth';
+} from '@/modules/security/domain/interfaces';
+import checkToken from '@/utils/auth/tokenValidator';
+import { IAuthContextData, PreviousLoginData, AuthStateParams } from './IAuth';
 import { authInitialState, AuthReducer } from './Auth.reducer';
 
 export const AuthContext = createContext<IAuthContextData>(
@@ -67,7 +65,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const authSuccess = useCallback(
     (params: AuthStateParams) => {
-      const { token, user } = params;
+      const { token } = params;
       ManageToken.set(token);
       interceptorRef.current = ManageInterceptors.create((response) => {
         if (response.status === 401) {
@@ -138,20 +136,25 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       dispatch({ type: 'SIGN_IN', payload: { previousLoginData: loginData } });
 
-      const remoteAuthentication = CreateRemoteAuthentication();
-      try {
-        const { auth_token: token, user_infos: user } =
-          await remoteAuthentication.auth({
-            uuid: GetDeviceID.get(),
-            origin: 'mobile',
-            ...params,
-          });
-        LocalAuthentication.save({ token, user });
-        authSuccess({ token, user });
-      } catch (error) {
-        handleError(error as Error);
-        dispatch({ type: 'SIGN_IN_FAIL' });
-      }
+      // MOCK:
+      authSuccess({
+        token: '',
+        user: { ...params, id: '', role: '', username: 'test' },
+      });
+      // const remoteAuthentication = CreateRemoteAuthentication();
+      // try {
+      //   const { auth_token: token, user_infos: user } =
+      //     await remoteAuthentication.auth({
+      //       uuid: GetDeviceID.get(),
+      //       origin: 'mobile',
+      //       ...params,
+      //     });
+      //   LocalAuthentication.save({ token, user });
+      //   authSuccess({ token, user });
+      // } catch (error) {
+      //   handleError(error as Error);
+      //   dispatch({ type: 'SIGN_IN_FAIL' });
+      // }
     },
     [authSuccess],
   );

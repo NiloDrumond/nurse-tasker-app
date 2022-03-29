@@ -18,7 +18,6 @@ export type SignInParams = {
   email: string;
   username?: string;
   password: string;
-  workspace: string;
 };
 
 export type SignOutParams = {

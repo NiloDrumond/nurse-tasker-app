@@ -1,10 +1,4 @@
-import { UserModel } from '@/modules/security/domain/interfaces';
-
-export type SignInParams = {
-  email: string;
-  username?: string;
-  password: string;
-};
+import { SignInParams, UserModel } from '@/modules/security/domain/interfaces';
 
 export interface PreviousLoginData {
   email: string;

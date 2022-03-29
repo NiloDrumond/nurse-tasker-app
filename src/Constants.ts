@@ -13,15 +13,15 @@ export const APP_VERSION = '0.0.1';
 const CONFIG = {
   development: {
     AUTH_URL: `authenticate`,
-    BASE_URL: `https://localhost:3000/api/`,
+    BASE_URL: `https://localhost:3000/api`,
   },
   staging: {
     AUTH_URL: `authenticate`,
-    BASE_URL: `https://localhost:3000/api/`,
+    BASE_URL: `https://localhost:3000/api`,
   },
   production: {
     AUTH_URL: `authenticate`,
-    BASE_URL: `https://localhost:3000/api/`,
+    BASE_URL: `https://localhost:3000/api`,
   },
 };
 

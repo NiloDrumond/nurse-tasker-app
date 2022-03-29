@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '@/hooks/Auth/useAuth';
+import { SignInParams } from '@/modules/security/domain/interfaces';
 
 function SignIn() {
   const { signIn } = useAuth();
@@ -18,15 +19,22 @@ function SignIn() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<SignInParams>();
 
-  const onSubmit = React.useCallback((data) => {
-    console.log('submiting with ', data);
-  }, []);
+  const onSubmit = React.useCallback(
+    (data: SignInParams) => {
+      signIn(data);
+    },
+    [signIn],
+  );
 
   return (
-    <Center>
-      <VStack>
+    <Center
+      flex={1}
+      _dark={{ bg: 'blueGray.800' }}
+      _light={{ bg: 'primary.200' }}
+    >
+      <VStack space={2}>
         <FormControl isRequired isInvalid={'username' in errors}>
           <Stack mx="4">
             <FormControl.Label>Username</FormControl.Label>
@@ -44,6 +52,11 @@ function SignIn() {
               rules={{ required: 'Field is required', minLength: 3 }}
               defaultValue=""
             />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {errors.password?.message}
+            </FormControl.ErrorMessage>
           </Stack>
         </FormControl>
         <FormControl isRequired isInvalid={'password' in errors}>
@@ -73,7 +86,7 @@ function SignIn() {
             </FormControl.ErrorMessage>
           </Stack>
         </FormControl>
-        <Button colorScheme="green" onPress={handleSubmit(onSubmit)}>
+        <Button mt={4} colorScheme="green" onPress={handleSubmit(onSubmit)}>
           Entrar
         </Button>
       </VStack>

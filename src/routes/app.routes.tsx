@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Center } from 'native-base';
 import Test from '../screens/Test';
 
 const Stack = createStackNavigator();

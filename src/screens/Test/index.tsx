@@ -1,11 +1,15 @@
 import React from 'react';
-import { Flex, Text } from 'native-base';
+import { Center, Text } from 'native-base';
 
 function Test() {
   return (
-    <Flex>
-      <Text>Teste</Text>
-    </Flex>
+    <Center
+      flex={1}
+      _dark={{ bg: 'blueGray.800' }}
+      _light={{ bg: 'primary.200' }}
+    >
+      <Text>Autenticado</Text>
+    </Center>
   );
 }
 
