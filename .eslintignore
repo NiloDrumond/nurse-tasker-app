@@ -1,0 +1,11 @@
+**/*.js
+node_modules
+build
+/*.js
+.vscode
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.webp
+
+config-overrides.js
