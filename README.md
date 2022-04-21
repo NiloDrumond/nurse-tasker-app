@@ -1,7 +1,7 @@
 # Como rodar
 
-- `> expo install`
-- `> expo start`
+- `expo install`
+- `expo start`
 - Na esquerda clicar em Run in web browser (ou no emulador que você quiser)
 
 # Documentações revelantes:
