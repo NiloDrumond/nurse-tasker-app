@@ -1,16 +1,16 @@
 import React from 'react';
 import { Center, Text } from 'native-base';
 
-function Test() {
+function Profile() {
   return (
     <Center
       flex={1}
-      _dark={{ bg: 'blueGray.800' }}
+      _dark={{ bg: 'coolGray.700' }}
       _light={{ bg: 'primary.200' }}
     >
-      <Text>Autenticado</Text>
+      <Text>Perfil</Text>
     </Center>
   );
 }
 
-export default Test;
+export default Profile;
