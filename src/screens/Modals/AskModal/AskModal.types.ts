@@ -1,5 +1,6 @@
 export type AskProps = {
   title: string;
   subtitle?: string;
-  callback: () => void;
+  onConfirm: () => void;
+  onCancel?: () => void;
 };

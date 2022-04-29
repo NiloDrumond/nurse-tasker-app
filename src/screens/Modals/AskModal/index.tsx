@@ -1,24 +1,36 @@
 import React from 'react';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
-import { Flex, Text, Center, View, useColorModeValue } from 'native-base';
+import {
+  Flex,
+  Text,
+  Center,
+  View,
+  useColorModeValue,
+  VStack,
+  Button,
+  HStack,
+} from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
-import { useTheme } from '@react-navigation/native';
-import useBackgroundColor from '@/utils/styles/useBackgroundColor';
+import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
 
 function AskModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'AskModal'>) {
-  const { colors } = useTheme();
   const bg = useBackgroundColor();
-  const { callback, subtitle, title } = route.params;
+  const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
-  const handlePress = React.useCallback(() => {
-    callback();
+  const handleConfirm = React.useCallback(() => {
+    onConfirm();
     navigation.goBack();
-  }, [callback, navigation]);
+  }, [onConfirm, navigation]);
+
+  const handleCancel = React.useCallback(() => {
+    if (onCancel) onCancel();
+    navigation.goBack();
+  }, [onCancel, navigation]);
 
   return (
     <View
@@ -39,8 +51,6 @@ function AskModal({
         style={{
           width: '60%',
           maxWidth: 400,
-          borderRadius: 3,
-          backgroundColor: bg,
           transform: [
             {
               scale: current.progress.interpolate({
@@ -52,12 +62,20 @@ function AskModal({
           ],
         }}
       >
-        <Flex bg={bg} p={4}>
-          <Text>{title}</Text>
-          <Pressable onPress={handlePress}>
-            <Text>clica</Text>
-          </Pressable>
-        </Flex>
+        <VStack borderRadius="lg" alignItems="center" bg={bg} p={4}>
+          <Text fontWeight={600} mb={2} fontSize="xl">
+            {title}
+          </Text>
+          {subtitle && <Text mb={4}>{subtitle}</Text>}
+          <HStack space="4">
+            <Button onPress={handleCancel} colorScheme="red">
+              Não
+            </Button>
+            <Button onPress={handleConfirm} colorScheme="green">
+              Sim
+            </Button>
+          </HStack>
+        </VStack>
       </Animated.View>
     </View>
   );

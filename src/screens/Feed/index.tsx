@@ -3,15 +3,17 @@ import { Center, Text } from 'native-base';
 import { Pressable } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
+import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
 
 function Feed({ navigation }: StackScreenProps<AppStackParamList, 'Feed'>) {
+  const bg = useBackgroundColor();
   const onPressTest = React.useCallback(() => {
     navigation.navigate('AskModal', {
-      callback: () => {
+      onConfirm: () => {
         console.log('ok');
       },
-      subtitle: 'se,',
-      title: 'titulo',
+      subtitle: 'Tem certeza que deseja tomar essa ação?',
+      title: 'Atenção!',
     });
   }, [navigation]);
 

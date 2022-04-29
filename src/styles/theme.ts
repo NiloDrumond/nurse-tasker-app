@@ -28,6 +28,11 @@ const theme = extendTheme({
     body: 'Hind',
     mono: 'Hind',
   },
+  colors: {
+    background: { box: '#E3E3E3' },
+    green: { button: '#8DDCBF' },
+    red: { button: '#DC8D8D' },
+  },
 });
 
 export default theme;

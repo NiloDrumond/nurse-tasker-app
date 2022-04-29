@@ -1,7 +1,5 @@
 import React from 'react';
 import { Text, Icon } from 'native-base';
-import { Feather } from '@expo/vector-icons';
-import { LabelPosition } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 
 type BottomTabLabelProps = {
   focused: boolean;
