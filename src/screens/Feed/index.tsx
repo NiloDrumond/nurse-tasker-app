@@ -18,11 +18,7 @@ function Feed({ navigation }: StackScreenProps<AppStackParamList, 'Feed'>) {
   }, [navigation]);
 
   return (
-    <Center
-      flex={1}
-      _dark={{ bg: 'coolGray.700' }}
-      _light={{ bg: 'primary.200' }}
-    >
+    <Center flex={1} bg={bg}>
       <Text>Ocorrencias</Text>
       <Pressable onPress={onPressTest}>
         <Text>ASDASD</Text>
