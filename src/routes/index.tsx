@@ -10,7 +10,7 @@ function Routes() {
   const { loading, isAuthenticated } = useAuth();
 
   if (loading) return <Loading />;
-  // if (!isAuthenticated) return <AuthRoutes />;
+  if (!isAuthenticated) return <AuthRoutes />;
   return (
     <AuthenticatedProvider>
       <AppRoutes />
