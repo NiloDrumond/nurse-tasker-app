@@ -13,6 +13,7 @@ function AuthRoutes() {
       }}
     >
       <Auth.Screen name="SignIn" component={SignIn} />
+      <Auth.Screen name="Modal" component={SignIn} />
     </Auth.Navigator>
   );
 }

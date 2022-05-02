@@ -1,7 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Center } from 'native-base';
-import Test from '../screens/Test';
+import BottomTab from '@/components/BottomTab';
+import AskModal from '@/screens/Modals/AskModal';
+import ConclusionModal from '@/screens/Modals/ConclusionModal';
+import OccurenceModal from '@/screens/Modals/OccurenceModal';
+import RepassModal from '@/screens/Modals/RepassModal';
 
 const Stack = createStackNavigator();
 
@@ -9,12 +12,45 @@ function AppRoutes() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
-        cardShadowEnabled: false,
+        cardShadowEnabled: true,
         cardOverlayEnabled: true,
+        headerShown: false,
       }}
     >
-      <Stack.Screen name="test" component={Test} />
+      <Stack.Screen name="BottomTab" component={BottomTab} />
+      
+      <Stack.Screen
+        options={{
+          presentation: 'transparentModal',
+        }}
+        name="AskModal"
+        component={AskModal}
+      />
+
+      <Stack.Screen
+        options={{
+          presentation: 'transparentModal',
+        }}
+        name="ConclusionModal"
+        component={ConclusionModal}
+      />
+
+      <Stack.Screen
+        options={{
+          presentation: 'transparentModal',
+        }}
+        name="OccurenceModal"
+        component={OccurenceModal}
+      />
+
+      <Stack.Screen
+        options={{
+          presentation: 'transparentModal',
+        }}
+        name="RepassModal"
+        component={RepassModal}
+      />
+      
     </Stack.Navigator>
   );
 }
