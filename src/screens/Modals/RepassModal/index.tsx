@@ -22,6 +22,39 @@ import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
 
+
+const data = [{
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+  fullName: "Jorge Silva"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
+  fullName: "Ana Cláudia Ribeiro"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
+  fullName: "Priscilla Lemos"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
+  fullName: "Lucas Drummond"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
+  fullName: "Pedro Henrique de Castro"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+  fullName: "Jorge Silva"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
+  fullName: "Ana Cláudia Ribeiro"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
+  fullName: "Priscilla Lemos"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
+  fullName: "Lucas Drummond"
+}, {
+  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
+  fullName: "Pedro Henrique de Castro"
+}]
+
 function RepassModal({
   route,
   navigation,
@@ -46,40 +79,6 @@ function RepassModal({
     navigation.goBack();
   }, [onCancel, navigation]);
 
-  let [type, setType] = React.useState("")
-
-  const data = [{
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    fullName: "Jorge Silva"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
-    fullName: "Ana Cláudia Ribeiro"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
-    fullName: "Priscilla Lemos"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
-    fullName: "Lucas Drummond"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
-    fullName: "Pedro Henrique de Castro"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    fullName: "Jorge Silva"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
-    fullName: "Ana Cláudia Ribeiro"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
-    fullName: "Priscilla Lemos"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
-    fullName: "Lucas Drummond"
-  }, {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
-    fullName: "Pedro Henrique de Castro"
-  }]
-
   return (
     <View
       style={{
@@ -97,8 +96,7 @@ function RepassModal({
       />
       <Animated.View
         style={{
-          width: '60%',
-          maxWidth: 400,
+          width: '70%',
           transform: [
             {
               scale: current.progress.interpolate({
@@ -110,13 +108,13 @@ function RepassModal({
           ],
         }}
       >
-        <VStack borderRadius="lg" alignItems="center" bg={bg} p={8} space={3} w="100%" maxH="500px">
+        <VStack borderRadius="lg" alignItems="center" bg={bg} p={4} space={3} w="100%" maxH="500px">
           <HStack w="100%">
-            <Text fontWeight={600} mb={2} fontSize="3xl">
+            <Text fontWeight={600} mb={2} fontSize="xl">
               {title}
             </Text>
             <Button colorScheme='transparent' alignSelf="right" p={0} ml="auto" onPress={handleCancel}>
-              <CloseIcon/>
+              <CloseIcon />
             </Button>
           </HStack>
           
@@ -131,7 +129,7 @@ function RepassModal({
                 _hover={{
                   bg: '#00000070'
                 }}>
-              <Text fontSize="2xl">{item.fullName}</Text>
+              <Text fontSize="md">{item.fullName}</Text>
             </Button>
             </Box>
           }

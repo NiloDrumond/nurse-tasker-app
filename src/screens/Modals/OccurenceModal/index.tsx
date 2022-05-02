@@ -36,7 +36,7 @@ function OccurenceModal({
     navigation.goBack();
   }, [onCancel, navigation]);
 
-  let [type, setType] = React.useState("")
+  const [type, setType] = React.useState("")
 
   return (
     <View
@@ -55,8 +55,7 @@ function OccurenceModal({
       />
       <Animated.View
         style={{
-          width: '60%',
-          maxWidth: 400,
+          width: '70%',
           transform: [
             {
               scale: current.progress.interpolate({
@@ -69,14 +68,14 @@ function OccurenceModal({
         }}
       >
         <VStack borderRadius="lg" alignItems="center" bg={bg} p={8} space={3}>
-          <Text fontWeight={600} mb={2} fontSize="3xl">
+          <Text fontWeight={600} mb={2} fontSize="xl">
             {title}
           </Text>
           <VStack w="100%">
-            <Text fontWeight={600} mb={2} fontSize="xl">
+            <Text fontWeight={600} mb={2} fontSize="md">
               {subtitle}
             </Text>
-            <Select selectedValue={type} minWidth="200" accessibilityLabel="Choose Service" placeholder="Tipo de ocorrência" _selectedItem={{
+            <Select selectedValue={type}  accessibilityLabel="Choose Service" placeholder="Tipo de ocorrência" _selectedItem={{
               bg: "teal.600",
               endIcon: <CheckIcon size="5" />
             }} mt={1} onValueChange={itemValue => setType(itemValue)}>
@@ -88,10 +87,10 @@ function OccurenceModal({
             </Select>
           </VStack>
           <VStack w="100%">
-            <Text fontWeight={600} mb={2} fontSize="xl">
+            <Text fontWeight={600} mb={2} fontSize="md">
               Selecione o remetente:
             </Text>
-            <Select selectedValue={type} minWidth="200" accessibilityLabel="Choose Service" placeholder="Remetente" _selectedItem={{
+            <Select selectedValue={type}  accessibilityLabel="Choose Service" placeholder="Remetente" _selectedItem={{
               bg: "teal.600",
               endIcon: <CheckIcon size="5" />
             }} mt={1} onValueChange={itemValue => setType(itemValue)}>
@@ -103,15 +102,14 @@ function OccurenceModal({
             </Select>
           </VStack>
           <VStack w="100%">
-            <Text fontWeight={600} mb={2} fontSize="xl">
+            <Text fontWeight={600} mb={2} fontSize="md">
               Descreva a situação:
             </Text>
             <TextArea h={40} placeholder="Descrição" w="100%"/>
           </VStack>
           <HStack space={2}>
             <Button
-              background="#909090" 
-              color="white"
+              background="coolGray.100" 
               borderRadius="36px"
               onPress={handleCancel}
             >
@@ -120,7 +118,7 @@ function OccurenceModal({
               </Text>
             </Button>
             <Button
-              background="#316163" 
+              colorScheme='green'
               color="black"
               borderRadius="36px"
               onPress={handleConfirm}

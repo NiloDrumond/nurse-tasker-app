@@ -19,7 +19,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
   const [showBox, setShowBox] = React.useState(false);
   const bg = useBackgroundColor();
   const onPressConclusion = React.useCallback(() => {
-    navigation.navigate('ConclusionModal', {
+    navigation.navigate('AskModal', {
       onConfirm: () => {
         console.log('ok');
       },
@@ -146,7 +146,8 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
               {showBox && (
                 <VStack space="10px">
                   <Button
-                    background="green.button" 
+                    background="green.button"
+                    colorScheme="green"
                     color="black"
                     borderRadius="36px"
                     onPress={onPressConclusion}
@@ -165,9 +166,9 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
                       Registrar Ocorrência
                     </Text>
                   </Button>
-                  <Button 
-                    background="white" 
-                    color="black" 
+                  <Button
+                    background="white"
+                    color="black"
                     borderRadius="36px"
                     onPress={onPressRepass}
                   >
