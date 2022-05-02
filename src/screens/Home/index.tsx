@@ -11,11 +11,40 @@ import {
 } from 'native-base';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native';
+import { AppStackParamList } from '@/services/navigation/navigation.types';
+import { StackScreenProps } from '@react-navigation/stack';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
 
-function Home() {
+function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
   const [showBox, setShowBox] = React.useState(false);
   const bg = useBackgroundColor();
+  const onPressConclusion = React.useCallback(() => {
+    navigation.navigate('ConclusionModal', {
+      onConfirm: () => {
+        console.log('ok');
+      },
+      subtitle: 'Você deseja concluir essa atividade?',
+      title: 'Atenção!',
+    });
+  }, [navigation]);
+  const onPressOccurence = React.useCallback(() => {
+    navigation.navigate('OccurenceModal', {
+      onConfirm: () => {
+        console.log('ok');
+      },
+      subtitle: 'Selecione o tipo de ocorrência:',
+      title: 'Formulário de ocorrência',
+    });
+  }, [navigation]);
+  const onPressRepass = React.useCallback(() => {
+    navigation.navigate('RepassModal', {
+      onConfirm: () => {
+        console.log('ok');
+      },
+      subtitle: 'Selecione para quem quer repassar a atividade:',
+      title: 'Novo responsável:',
+    });
+  }, [navigation]);
 
   return (
     <Center flex={1} bg={bg}>
@@ -117,9 +146,10 @@ function Home() {
               {showBox && (
                 <VStack space="10px">
                   <Button
-                    background="green.button"
+                    background="green.button" 
                     color="black"
                     borderRadius="36px"
+                    onPress={onPressConclusion}
                   >
                     <Text color="black" marginX="16px" marginY="-2px">
                       Concluir Atividade
@@ -129,12 +159,18 @@ function Home() {
                     background="red.button"
                     color="black"
                     borderRadius="36px"
+                    onPress={onPressOccurence}
                   >
                     <Text color="black" marginX="16px" marginY="-2px">
                       Registrar Ocorrência
                     </Text>
                   </Button>
-                  <Button background="white" color="black" borderRadius="36px">
+                  <Button 
+                    background="white" 
+                    color="black" 
+                    borderRadius="36px"
+                    onPress={onPressRepass}
+                  >
                     <Text color="black" marginX="16px" marginY="-2px">
                       Repassar Atividade
                     </Text>

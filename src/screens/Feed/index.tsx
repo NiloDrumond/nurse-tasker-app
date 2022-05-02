@@ -4,7 +4,7 @@ import { Pressable } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
-
+ 
 function Feed({ navigation }: StackScreenProps<AppStackParamList, 'Feed'>) {
   const bg = useBackgroundColor();
   const onPressTest = React.useCallback(() => {
