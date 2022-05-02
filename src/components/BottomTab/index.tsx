@@ -7,6 +7,7 @@ import Feed from '@/screens/Feed';
 import Home from '@/screens/Home';
 import Profile from '@/screens/Profile';
 import { Feather } from '@expo/vector-icons';
+import WorkInProgress from '@/screens/Utils/WorkInProgress';
 import BottomTabIcon from './BottomTab.Icon';
 import BottomTabLabel from './BottomTab.Label';
 import BottomTabButton from './BottomTab.Button';
@@ -52,9 +53,9 @@ function BottomTab() {
         },
       })}
     >
-      <Tab.Screen name="Feed" component={Feed} />
+      <Tab.Screen name="Feed" component={WorkInProgress} />
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Profile" component={WorkInProgress} />
     </Tab.Navigator>
   );
 }
