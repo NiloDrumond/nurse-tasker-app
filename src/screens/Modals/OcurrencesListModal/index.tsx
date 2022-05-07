@@ -14,20 +14,23 @@ import {
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
-import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
 import { Ionicons, Entypo } from '@expo/vector-icons';
-import AddButton from '@/components/AddButton';
 import OcurrencesListModalItem from './OcurrencesListModal.Item';
 
 function OcurrencesListModal({
   navigation,
 }: StackScreenProps<AppStackParamList, 'OcurrencesListModal'>) {
-  const bg = useBackgroundColor();
   const { current } = useCardAnimation();
 
   const handleCreate = React.useCallback(() => {
-    console.log('add');
-  }, []);
+    navigation.navigate('OccurenceModal', {
+      onConfirm: () => {
+        console.log('ok');
+      },
+      subtitle: 'Selecione o tipo de ocorrência:',
+      title: 'Formulário de ocorrência',
+    });
+  }, [navigation]);
 
   return (
     <View
@@ -48,7 +51,7 @@ function OcurrencesListModal({
       />
       <Animated.View
         style={{
-          width: '80%',
+          maxWidth: '90%',
           maxHeight: '90%',
           // maxWidth: 400,
           transform: [

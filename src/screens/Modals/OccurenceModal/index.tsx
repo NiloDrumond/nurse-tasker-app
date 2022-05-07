@@ -22,7 +22,6 @@ function OccurenceModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'OccurenceModal'>) {
-  const bg = useBackgroundColor();
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
@@ -67,7 +66,7 @@ function OccurenceModal({
           ],
         }}
       >
-        <VStack borderRadius="lg" alignItems="center" bg={bg} p={8} space={3}>
+        <VStack borderRadius="lg" alignItems="center" bg="white" p={8} space={3}>
           <Text fontWeight={600} mb={2} fontSize="xl">
             {title}
           </Text>
@@ -109,21 +108,20 @@ function OccurenceModal({
           </VStack>
           <HStack space={2}>
             <Button
-              background="coolGray.100" 
               borderRadius="36px"
               onPress={handleCancel}
+              colorScheme="coolGray"
             >
-              <Text color="black" marginX="16px" marginY="-2px">
+              <Text  marginX="16px" marginY="-2px">
               Cancelar
               </Text>
             </Button>
             <Button
               colorScheme='green'
-              color="black"
               borderRadius="36px"
               onPress={handleConfirm}
             >
-              <Text color="black" marginX="16px" marginY="-2px">
+              <Text marginX="16px" marginY="-2px">
               Enviar
               </Text>
             </Button>

@@ -12,6 +12,7 @@ function NurseActions() {
       title: 'Atenção!',
     });
   }, []);
+
   const onPressOccurence = React.useCallback(() => {
     navigation.navigate('OccurenceModal', {
       onConfirm: () => {
@@ -21,6 +22,7 @@ function NurseActions() {
       title: 'Formulário de ocorrência',
     });
   }, []);
+
   const onPressRepass = React.useCallback(() => {
     navigation.navigate('RepassModal', {
       onConfirm: () => {
