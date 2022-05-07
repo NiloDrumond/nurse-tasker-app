@@ -1,14 +1,11 @@
 import React from 'react';
-import { Button, Text, HStack, View, VStack, Flex } from 'native-base';
+import { Text, HStack, VStack, Flex } from 'native-base';
 import { TouchableHighlight } from 'react-native';
-import { AppStackParamList } from '@/services/navigation/navigation.types';
-import { StackNavigationProp } from '@react-navigation/stack';
-import useTextColor from '@/styles/hooks/useTextColor';
 import { useUser } from '@/hooks/User/useUser';
 import { DoctorActions, NurseActions } from './Prescription.Actions';
+import PrescriptionTasksList from './Prescription.TasksList';
 
 function Prescription() {
-  const color = useTextColor();
   const { role } = useUser();
   const [showBox, setShowBox] = React.useState(false);
 
@@ -49,30 +46,7 @@ function Prescription() {
           </VStack>
         </HStack>
 
-        {showBox && (
-          <VStack>
-            <HStack space="10px" alignItems="center">
-              <Text color="black" fontSize="16px">
-                14:00
-              </Text>
-              <View
-                width="12px"
-                height="12px"
-                borderRadius="50%"
-                backgroundColor="#749B97"
-              />
-              <VStack flex={1}>
-                <Text color="black" fontSize="10px" fontWeight="bold">
-                  Medicamento Prescrito
-                </Text>
-                <Text color="black" fontSize="10px">
-                  Médico: Fábio da Silva
-                </Text>
-              </VStack>
-            </HStack>
-          </VStack>
-        )}
-
+        {showBox && <PrescriptionTasksList />}
         {showBox && (role === 'nurse' ? <NurseActions /> : <DoctorActions />)}
       </VStack>
     </TouchableHighlight>
