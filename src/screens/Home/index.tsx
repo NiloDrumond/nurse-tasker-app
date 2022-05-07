@@ -27,27 +27,8 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
 
   return (
     <Center flex={1} bg={bg}>
-      <VStack position="relative" w="80%" h="90%" mb="20%" space={18}>
+      <VStack position="relative" w="90%" h="90%" mb="20%" space={18}>
         <AddButton onPress={handleCreate} />
-        <HStack
-          justifyItems="space-evenly"
-          alignItems="center"
-          space={2}
-          bg="white"
-          borderRadius="16px"
-          padding="16px 24px"
-        >
-          <Ionicons name="person" size={60} color="black" />
-
-          <VStack justifyItems="space-evenly">
-            <Text color="black" fontSize="24px">
-              Renata dos Santos
-            </Text>
-            <Text color="black" fontSize="18px">
-              CPF: 110.231.235-87
-            </Text>
-          </VStack>
-        </HStack>
 
         <VStack
           justifyItems="space-evenly"

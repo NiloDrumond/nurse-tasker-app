@@ -17,6 +17,7 @@ import {
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
+import CloseButton from '@/components/CloseButton';
 
 function OccurenceModal({
   route,
@@ -67,9 +68,13 @@ function OccurenceModal({
         }}
       >
         <VStack borderRadius="lg" alignItems="center" bg="white" p={8} space={3}>
-          <Text fontWeight={600} mb={2} fontSize="xl">
-            {title}
-          </Text>
+          <Flex w="100%" position="relative">
+            <Text fontWeight={600} mb={2} fontSize="xl">
+              {title}
+            </Text>
+            <CloseButton />
+          </Flex>
+          
           <VStack w="100%">
             <Text fontWeight={600} mb={2} fontSize="md">
               {subtitle}
@@ -112,7 +117,7 @@ function OccurenceModal({
               onPress={handleCancel}
               colorScheme="coolGray"
             >
-              <Text  marginX="16px" marginY="-2px">
+              <Text color="white" marginX="16px" marginY="-2px">
               Cancelar
               </Text>
             </Button>
@@ -121,7 +126,7 @@ function OccurenceModal({
               borderRadius="36px"
               onPress={handleConfirm}
             >
-              <Text marginX="16px" marginY="-2px">
+              <Text color="white" marginX="16px" marginY="-2px">
               Enviar
               </Text>
             </Button>

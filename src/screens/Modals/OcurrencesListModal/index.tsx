@@ -15,6 +15,7 @@ import { Animated, Pressable, StyleSheet } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
 import { Ionicons, Entypo } from '@expo/vector-icons';
+import CloseButton from '@/components/CloseButton';
 import OcurrencesListModalItem from './OcurrencesListModal.Item';
 
 function OcurrencesListModal({
@@ -51,7 +52,7 @@ function OcurrencesListModal({
       />
       <Animated.View
         style={{
-          maxWidth: '90%',
+          maxWidth: '80%',
           maxHeight: '90%',
           // maxWidth: 400,
           transform: [
@@ -76,9 +77,12 @@ function OcurrencesListModal({
               padding="16px 24px"
               flex={1}
             >
-              <Text fontSize="2xl" color="black">
-                Ocorrências
-              </Text>
+              <Center w="100%" position="relative">
+                <Text fontSize="2xl" color="black">
+                  Ocorrências
+                </Text>
+                <CloseButton />
+              </Center>
               <Input
                 w="100%"
                 placeholder="Pesquisar"

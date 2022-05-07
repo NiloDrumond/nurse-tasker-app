@@ -12,13 +12,12 @@ import {
 } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
-import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
+import CloseButton from '@/components/CloseButton';
 
 function AskModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'AskModal'>) {
-  const bg = useBackgroundColor();
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
@@ -62,10 +61,14 @@ function AskModal({
           ],
         }}
       >
-        <VStack borderRadius="lg" alignItems="center" bg={bg} p={4}>
-          <Text fontWeight={600} mb={2} fontSize="xl">
-            {title}
-          </Text>
+        <VStack borderRadius="lg" alignItems="center" bg="white" p={4}>
+          <Center w="100%" position="relative">
+            <Text fontWeight={600} mb={2} fontSize="xl">
+              {title}
+            </Text>
+            <CloseButton />
+          </Center>
+
           {subtitle && <Text mb={4}>{subtitle}</Text>}
           <HStack space="4">
             <Button onPress={handleCancel} colorScheme="red">

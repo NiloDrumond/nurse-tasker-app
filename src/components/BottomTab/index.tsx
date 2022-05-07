@@ -3,11 +3,11 @@ import { Flex, Icon } from 'native-base';
 import DeviceInfo from 'react-native-device-info';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Platform } from 'react-native';
-import Ocurrences from '@/screens/Ocurrences';
 import Home from '@/screens/Home';
 import Profile from '@/screens/Profile';
 import { Feather } from '@expo/vector-icons';
 import WorkInProgress from '@/screens/Utils/WorkInProgress';
+import Ocurrences from '@/screens/Ocurrences';
 import BottomTabIcon from './BottomTab.Icon';
 import BottomTabLabel from './BottomTab.Label';
 import BottomTabButton from './BottomTab.Button';
@@ -41,7 +41,7 @@ function BottomTab() {
           paddingBottom: 4,
           paddingTop: 10,
           paddingHorizontal: 2,
-          marginHorizontal: 40,
+          marginHorizontal: 0,
           position: 'absolute',
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
