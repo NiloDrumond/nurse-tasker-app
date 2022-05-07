@@ -2,7 +2,7 @@ import { extendTheme } from 'native-base';
 
 const theme = extendTheme({
   config: {
-    initialColorMode: 'dark',
+    initialColorMode: 'light',
   },
   fontConfig: {
     Hind: {

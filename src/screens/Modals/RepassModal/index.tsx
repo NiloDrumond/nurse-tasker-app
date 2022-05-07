@@ -90,7 +90,7 @@ function RepassModal({
       <Pressable
         style={[
           StyleSheet.absoluteFill,
-          { backgroundColor: 'rgba(0, 0, 0, 0.2)' },
+          { backgroundColor: 'rgba(0, 0, 0, 0.4)' },
         ]}
         onPress={navigation.goBack}
       />

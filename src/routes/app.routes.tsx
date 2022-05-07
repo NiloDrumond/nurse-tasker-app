@@ -4,6 +4,7 @@ import BottomTab from '@/components/BottomTab';
 import AskModal from '@/screens/Modals/AskModal';
 import OccurenceModal from '@/screens/Modals/OccurenceModal';
 import RepassModal from '@/screens/Modals/RepassModal';
+import OcurrencesListModal from '@/screens/Modals/OcurrencesListModal';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,13 @@ function AppRoutes() {
       }}
     >
       <Stack.Screen name="BottomTab" component={BottomTab} />
+      <Stack.Screen
+        options={{
+          presentation: 'transparentModal',
+        }}
+        name="OcurrencesListModal"
+        component={OcurrencesListModal}
+      />
       <Stack.Screen
         options={{
           presentation: 'transparentModal',

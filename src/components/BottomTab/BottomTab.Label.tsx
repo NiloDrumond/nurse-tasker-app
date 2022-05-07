@@ -9,8 +9,8 @@ type BottomTabLabelProps = {
 
 function getScreenName(screen: string) {
   switch (screen) {
-    case 'Feed':
-      return 'Feed';
+    case 'Ocurrences':
+      return 'Ocurrências';
     case 'Home':
       return 'Home';
     case 'Profile':

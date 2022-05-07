@@ -11,7 +11,7 @@ type BottomTabIconProps = {
 
 function BottomTabIcon({ screen, size, color }: BottomTabIconProps) {
   switch (screen) {
-    case 'Feed':
+    case 'Ocurrences':
       return <Icon size={size} as={Feather} color={color} name="search" />;
     case 'Home':
       return <Icon size={size} as={Feather} color={color} name="home" />;

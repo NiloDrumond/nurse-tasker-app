@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import config from '@/Constants';
+import config from '@/config';
 import {
   GetParams,
   HttpParamsConfig,
@@ -12,9 +12,6 @@ import {
 
 const apiConfig = {
   baseUrl: config.BASE_URL,
-  validateStatus: () => {
-    return true;
-  },
 };
 
 class AxiosHelper implements IApiHelper {
