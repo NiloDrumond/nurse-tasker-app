@@ -6,7 +6,7 @@ export const UserContext = createContext<UserContextData>(
 );
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [role, setRole] = React.useState<UserRole>('nurse');
+  const [role, setRole] = React.useState<UserRole>('doctor');
   const [userId, setUserId] = React.useState('123');
 
   const providerProps = React.useMemo<UserContextData>(

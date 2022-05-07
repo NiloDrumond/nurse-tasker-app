@@ -83,23 +83,6 @@ function OcurrencesListModal({
                 </Text>
                 <CloseButton />
               </Center>
-              <Input
-                w="100%"
-                placeholder="Pesquisar"
-                size="lg"
-                variant="filled"
-                color="black"
-                bg="background.box"
-                paddingX="16px"
-                marginBottom="8px"
-                borderRadius="12px"
-                InputRightElement={
-                  <Icon
-                    as={<Entypo name="magnifying-glass" size={24} />}
-                    color="black"
-                  />
-                }
-              />
               <Button w="100%" onPress={handleCreate}>
                 Criar Ocorrência
               </Button>

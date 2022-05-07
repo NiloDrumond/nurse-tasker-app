@@ -59,7 +59,6 @@ function RepassModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'RepassModal'>) {
-  const bg = useBackgroundColor();
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
@@ -108,7 +107,7 @@ function RepassModal({
           ],
         }}
       >
-        <VStack borderRadius="lg" alignItems="center" bg={bg} p={4} space={3} w="100%" maxH="500px">
+        <VStack borderRadius="lg" alignItems="center" bg="white" p={4} space={3} w="100%" maxH="500px">
           <HStack w="100%">
             <Text fontWeight={600} mb={2} fontSize="xl">
               {title}

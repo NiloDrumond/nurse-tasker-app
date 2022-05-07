@@ -1,35 +1,19 @@
 import React from 'react';
-import {
-  Button,
-  Center,
-  HStack,
-  Icon,
-  Input,
-  Text,
-  View,
-  VStack,
-  FlatList,
-} from 'native-base';
-import { Entypo, Ionicons } from '@expo/vector-icons';
-import { TouchableHighlight } from 'react-native';
+import { Button, Center, Text, VStack, FlatList } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
-import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
-import AddButton from '@/components/AddButton';
+import { useUser } from '@/hooks/User/useUser';
 import Prescription from './components/Prescription';
 
 function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
-  const bg = useBackgroundColor();
-
+  const { role } = useUser();
   const handleCreate = React.useCallback(() => {
     console.log('add');
   }, []);
 
   return (
-    <Center flex={1} bg={bg}>
+    <Center flex={1} bg="coolGray.700">
       <VStack position="relative" w="90%" h="90%" mb="20%" space={18}>
-        <AddButton onPress={handleCreate} />
-
         <VStack
           justifyItems="space-evenly"
           alignItems="center"
@@ -42,23 +26,11 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
           <Text fontSize="2xl" color="black">
             Minhas Prescrições
           </Text>
-          <Input
-            w="100%"
-            placeholder="Pesquisar"
-            size="lg"
-            variant="filled"
-            color="black"
-            bg="background.box"
-            paddingX="16px"
-            marginBottom="8px"
-            borderRadius="12px"
-            InputRightElement={
-              <Icon
-                color="black"
-                as={<Entypo name="magnifying-glass" size={24} />}
-              />
-            }
-          />
+          {role === 'doctor' && (
+            <Button w="full" onPress={handleCreate}>
+              Criar Prescrição
+            </Button>
+          )}
           <FlatList data={[1, 2, 3, 4]} renderItem={() => <Prescription />} />
         </VStack>
       </VStack>
