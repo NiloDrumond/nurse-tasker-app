@@ -22,8 +22,13 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
   const bg = useBackgroundColor();
 
   const handleCreate = React.useCallback(() => {
-    console.log('add');
-  }, []);
+    navigation.navigate('PrescriptionModal', {
+      onConfirm: () => {
+        console.log('ok');
+      },
+      title: 'Formulário de prescrição',
+    });
+  }, [navigation]);
 
   return (
     <Center flex={1} bg={bg}>
