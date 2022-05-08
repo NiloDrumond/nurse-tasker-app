@@ -2,10 +2,16 @@ import React from 'react';
 import { Text, HStack, VStack, Flex } from 'native-base';
 import { TouchableHighlight } from 'react-native';
 import { useUser } from '@/hooks/User/useUser';
+import { IPrescription } from '@/modules/shared/interfaces';
 import { DoctorActions, NurseActions } from './Prescription.Actions';
 import PrescriptionTasksList from './Prescription.TasksList';
 
-function Prescription() {
+
+type PrescriptionProps = {
+  prescription: IPrescription
+}
+
+function Prescription({ prescription }: PrescriptionProps) {
   const { funcao } = useUser();
   const [showBox, setShowBox] = React.useState(false);
 
@@ -47,7 +53,12 @@ function Prescription() {
         </HStack>
 
         {showBox && <PrescriptionTasksList />}
-        {showBox && (funcao === 'E' ? <NurseActions /> : <DoctorActions />)}
+        {showBox &&
+          (funcao === 'E' ? (
+            <NurseActions prescription={prescription} />
+          ) : (
+            <DoctorActions />
+          ))}
       </VStack>
     </TouchableHighlight>
   );

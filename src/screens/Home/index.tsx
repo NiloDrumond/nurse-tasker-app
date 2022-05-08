@@ -53,7 +53,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
           <FlatList
             data={data}
             renderItem={({ item }: ListRenderItemInfo<IPrescription>) => (
-              <Prescription />
+              <Prescription prescription={item} />
             )}
           />
         </VStack>

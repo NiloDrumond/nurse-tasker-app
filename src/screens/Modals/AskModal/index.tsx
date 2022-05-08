@@ -11,6 +11,9 @@ import {
   HStack,
 } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
+import useSWR from 'swr';
+import config from '@/config';
+import api from '@/modules/shared/http/ApiHelper';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import CloseButton from '@/components/CloseButton';
 

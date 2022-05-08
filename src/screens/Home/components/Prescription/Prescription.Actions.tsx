@@ -1,12 +1,23 @@
 import React from 'react';
 import { Button, Flex, VStack, Text } from 'native-base';
 import navigation from '@/services/navigation';
+import { IPrescription } from '@/modules/shared/interfaces';
+import { nextStatePrescriptionService } from '@/services/prescriptions/nextStatePrescriptionService';
+import handleError from '@/utils/errors/handleError';
 
-function NurseActions() {
+type NurseActionProps = {
+  prescription: IPrescription;
+};
+
+function NurseActions({ prescription }: NurseActionProps) {
   const onPressConclusion = React.useCallback(() => {
     navigation.navigate('AskModal', {
-      onConfirm: () => {
-        console.log('ok');
+      onConfirm: async () => {
+        try {
+          await nextStatePrescriptionService(prescription.id_prescricao);
+        } catch {
+          handleError({ title: 'Erro', message: 'Falha ao criar prescrição' });
+        }
       },
       subtitle: 'Você deseja concluir essa atividade?',
       title: 'Atenção!',
