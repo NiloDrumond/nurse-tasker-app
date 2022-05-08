@@ -18,3 +18,10 @@ export interface IPrescription {
   cpf_paciente: string;
   cpf_cadastrante: string;
 }
+
+export interface IEmployee {
+  CPF: string;
+  nome: string;
+  senha: string;
+  cargo: UserRole;
+}
