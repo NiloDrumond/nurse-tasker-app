@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTab from '@/components/BottomTab';
 import AskModal from '@/screens/Modals/AskModal';
-import OccurenceModal from '@/screens/Modals/OccurenceModal';
+import OccurrenceModal from '@/screens/Modals/OccurrenceModal';
 import RepassModal from '@/screens/Modals/RepassModal';
-import OcurrencesListModal from '@/screens/Modals/OcurrencesListModal';
 import PrescriptionModal from '@/screens/Modals/PrescriptionModal';
+import OccurrencesListModal from '@/screens/Modals/OccurrencesListModal';
 
 const Stack = createStackNavigator();
 
@@ -23,8 +23,8 @@ function AppRoutes() {
         options={{
           presentation: 'transparentModal',
         }}
-        name="OcurrencesListModal"
-        component={OcurrencesListModal}
+        name="OccurrencesListModal"
+        component={OccurrencesListModal}
       />
       <Stack.Screen
         options={{
@@ -37,8 +37,8 @@ function AppRoutes() {
         options={{
           presentation: 'transparentModal',
         }}
-        name="OccurenceModal"
-        component={OccurenceModal}
+        name="OccurrenceModal"
+        component={OccurrenceModal}
       />
       <Stack.Screen
         options={{

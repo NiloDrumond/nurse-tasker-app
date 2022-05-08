@@ -8,7 +8,7 @@ const config = {
   PRESCRIPTIONS_URL: 'prescricoes',
   USERS_URL: 'pessoas/usuarios',
   PATIENTS_URL: 'pacientes',
-  OCCURRENCES: 'ocurrencias',
+  OCCURRENCES_URL: 'ocurrencias',
 };
 
 export default config;

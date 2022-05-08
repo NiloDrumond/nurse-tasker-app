@@ -11,26 +11,49 @@ import {
   Button,
 } from 'native-base';
 
-import { Animated, Pressable, StyleSheet } from 'react-native';
+import { Animated, Pressable, StyleSheet, ListRenderItem } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
 import CloseButton from '@/components/CloseButton';
-import OcurrencesListModalItem from './OcurrencesListModal.Item';
+import { IOccurrence } from '@/modules/shared/interfaces';
+import config from '@/config';
+import api from '@/modules/shared/http/ApiHelper';
+import useSWR from 'swr';
+import OccurrencesListModalItem from './OccurrencesListModal.Item';
 
-function OcurrencesListModal({
+function OccurrencesListModal({
   navigation,
-}: StackScreenProps<AppStackParamList, 'OcurrencesListModal'>) {
+  route,
+}: StackScreenProps<AppStackParamList, 'OccurrencesListModal'>) {
+  const {
+    params: { prescriptionId },
+  } = route;
   const { current } = useCardAnimation();
+  const { data } = useSWR<IOccurrence[]>(
+    config.OCCURRENCES_URL,
+    async (url) => {
+      const response = await api.get<IOccurrence[]>({ url });
+      return response.body;
+    },
+    { refreshInterval: 5000 },
+  );
 
   const handleCreate = React.useCallback(() => {
-    navigation.navigate('OccurenceModal', {
+    navigation.navigate('OccurrenceModal', {
       onConfirm: () => {
         console.log('ok');
       },
-      subtitle: 'Selecione o tipo de ocorrência:',
+      prescriptionId,
       title: 'Formulário de ocorrência',
     });
-  }, [navigation]);
+  }, [navigation, prescriptionId]);
+
+  const renderItem: ListRenderItem<IOccurrence> = React.useCallback(
+    ({ item }) => {
+      return <OccurrencesListModalItem occurrence={item} />;
+    },
+    [],
+  );
 
   return (
     <View
@@ -84,10 +107,7 @@ function OcurrencesListModal({
               <Button w="100%" onPress={handleCreate}>
                 Criar Ocorrência
               </Button>
-              <FlatList
-                data={[1, 2, 3, 4, 5]}
-                renderItem={() => <OcurrencesListModalItem />}
-              />
+              <FlatList data={data} renderItem={renderItem} />
             </VStack>
           </VStack>
         </Center>
@@ -96,4 +116,4 @@ function OcurrencesListModal({
   );
 }
 
-export default OcurrencesListModal;
+export default OccurrencesListModal;

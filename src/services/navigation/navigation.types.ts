@@ -1,14 +1,15 @@
 import { AskProps } from '@/screens/Modals/AskModal/AskModal.types';
-import { OccurenceProps } from '@/screens/Modals/OccurenceModal/OccurenceModal.types';
 import { PrescriptionProps } from '@/screens/Modals/PrescriptionModal/PrescriptionModal.types';
 import { RepassProps } from '@/screens/Modals/RepassModal/RepassModal.types';
+import { OccurrenceProps } from '@/screens/Modals/OccurrenceModal/OccurrenceModal.types';
+import { OccurrencesListModalProps } from '@/screens/Modals/OccurrencesListModal/OccurrencesListModal.types';
 
 export type AppStackParamList = {
   Home: undefined;
   Profile: undefined;
-  OcurrencesListModal: undefined;
+  OccurrencesListModal: OccurrencesListModalProps;
   AskModal: AskProps;
-  OccurenceModal: OccurenceProps;
+  OccurrenceModal: OccurrenceProps;
   RepassModal: RepassProps;
   PrescriptionModal: PrescriptionProps;
 };

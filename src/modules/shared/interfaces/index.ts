@@ -19,9 +19,15 @@ export interface IPrescription {
   cpf_cadastrante: string;
 }
 
-export interface IEmployee {
-  CPF: string;
-  nome: string;
-  senha: string;
-  cargo: UserRole;
+export const occurrenceTypes = ['EM', 'EP', 'CD', 'RP', 'O'] as const;
+export type OccurrenceType = typeof occurrenceTypes[number];
+
+export interface IOccurrence {
+  id_ocorrencia: string;
+  prescricao_associada: string;
+  tipo: OccurrenceType;
+  descricao: string;
+  cpf_paciente: string;
+  usuario_cadastrante: string;
+
 }

@@ -22,17 +22,17 @@ function NurseActions({ prescription }: NurseActionProps) {
       subtitle: 'Você deseja concluir essa atividade?',
       title: 'Atenção!',
     });
-  }, []);
+  }, [prescription]);
 
-  const onPressOccurence = React.useCallback(() => {
-    navigation.navigate('OccurenceModal', {
+  const onPressOccurrence = React.useCallback(() => {
+    navigation.navigate('OccurrenceModal', {
       onConfirm: () => {
         console.log('ok');
       },
-      subtitle: 'Selecione o tipo de ocorrência:',
+      prescriptionId: prescription.id_prescricao,
       title: 'Formulário de ocorrência',
     });
-  }, []);
+  }, [prescription]);
 
   const onPressRepass = React.useCallback(() => {
     navigation.navigate('RepassModal', {
@@ -61,7 +61,7 @@ function NurseActions({ prescription }: NurseActionProps) {
         background="red.button"
         color="black"
         borderRadius="36px"
-        onPress={onPressOccurence}
+        onPress={onPressOccurrence}
       >
         <Text color="black" marginX="16px" marginY="-2px">
           Registrar Ocorrência
@@ -81,10 +81,16 @@ function NurseActions({ prescription }: NurseActionProps) {
   );
 }
 
-function DoctorActions() {
-  const onSeeOcurrences = React.useCallback(() => {
-    navigation.navigate('OcurrencesListModal', undefined);
-  }, []);
+type DoctorActionProps = {
+  prescription: IPrescription;
+};
+
+function DoctorActions({ prescription }: DoctorActionProps) {
+  const onSeeOccurrences = React.useCallback(() => {
+    navigation.navigate('OccurrencesListModal', {
+      prescriptionId: prescription.id_prescricao,
+    });
+  }, [prescription]);
 
   return (
     <VStack space="10px">
@@ -92,7 +98,7 @@ function DoctorActions() {
         background="white"
         color="black"
         borderRadius="36px"
-        onPress={onSeeOcurrences}
+        onPress={onSeeOccurrences}
       >
         <Text color="black" marginX="16px" marginY="-2px">
           Ver Ocorrências

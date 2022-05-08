@@ -52,7 +52,7 @@ function BottomTab() {
         },
       })}
     >
-      {/* <Tab.Screen name="Ocurrences" component={Ocurrences} /> */}
+      {/* <Tab.Screen name="Occurrences" component={Occurrences} /> */}
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>

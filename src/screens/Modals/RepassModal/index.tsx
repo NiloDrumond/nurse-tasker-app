@@ -22,7 +22,7 @@ import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
 import useSWR from 'swr';
-import { IEmployee } from '@/modules/shared/interfaces';
+import { IUser } from '@/modules/shared/interfaces';
 import api from '@/modules/shared/http/ApiHelper';
 import config from '@/config';
 
@@ -36,10 +36,10 @@ function RepassModal({
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
-  const { data } = useSWR<IEmployee[]>(
+  const { data } = useSWR<IUser[]>(
     config.PRESCRIPTIONS_URL,
     async (url) => {
-      const response = await api.get<IEmployee[]>({ url });
+      const response = await api.get<IUser[]>({ url });
       return response.body;
     },
     { refreshInterval: 5000 },
