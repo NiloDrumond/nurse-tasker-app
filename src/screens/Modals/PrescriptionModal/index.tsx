@@ -10,7 +10,6 @@ import {
   HStack,
   Select,
   CheckIcon,
-  TextArea,
   Input,
   FormControl,
   WarningOutlineIcon,
@@ -23,30 +22,28 @@ import { useUser } from '@/hooks/User/useUser';
 import { createPrescriptionService } from '@/services/prescriptions/createPrescriptionService';
 import { CreatePrescriptionData } from './PrescriptionModal.types';
 
-function OccurenceModal({
+function OccurrenceModal({
   route,
   navigation,
-}: StackScreenProps<AppStackParamList, 'OccurenceModal'>) {
+}: StackScreenProps<AppStackParamList, 'OccurrenceModal'>) {
   const { cpf } = useUser();
   const {
     handleSubmit,
-    register,
     control,
-    setError,
     formState: { errors },
   } = useForm<CreatePrescriptionData>();
-  const { onCancel, onConfirm, subtitle, title } = route.params;
+  const { onCancel, onConfirm, title } = route.params;
   const { current } = useCardAnimation();
 
   const handleConfirm = React.useCallback(
     async (data: CreatePrescriptionData) => {
       try {
         await createPrescriptionService(data, cpf);
+        onConfirm();
+        navigation.goBack();
       } catch {
         handleError({ title: 'Erro', message: 'Falha ao criar prescrição' });
       }
-      onConfirm();
-      navigation.goBack();
     },
     [onConfirm, navigation, cpf],
   );
@@ -247,4 +244,4 @@ function OccurenceModal({
   );
 }
 
-export default OccurenceModal;
+export default OccurrenceModal;

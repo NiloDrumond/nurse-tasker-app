@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack, Text, Center, Pressable } from 'native-base';
 import navigation from '@/services/navigation';
 
-function OcurrencesListModalItem() {
+function OccurrencesListModalItem() {
   const handlePress = React.useCallback(() => {
     navigation.navigate('AskModal', {
       onConfirm: () => {
@@ -38,4 +38,4 @@ function OcurrencesListModalItem() {
   );
 }
 
-export default OcurrencesListModalItem;
+export default OccurrencesListModalItem;

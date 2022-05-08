@@ -15,15 +15,15 @@ import { Animated, Pressable, StyleSheet } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
 import CloseButton from '@/components/CloseButton';
-import OcurrencesListModalItem from './OcurrencesListModal.Item';
+import OccurrencesListModalItem from './OccurrencesListModal.Item';
 
-function OcurrencesListModal({
+function OccurrencesListModal({
   navigation,
-}: StackScreenProps<AppStackParamList, 'OcurrencesListModal'>) {
+}: StackScreenProps<AppStackParamList, 'OccurrencesListModal'>) {
   const { current } = useCardAnimation();
 
   const handleCreate = React.useCallback(() => {
-    navigation.navigate('OccurenceModal', {
+    navigation.navigate('OccurrenceModal', {
       onConfirm: () => {
         console.log('ok');
       },
@@ -86,7 +86,7 @@ function OcurrencesListModal({
               </Button>
               <FlatList
                 data={[1, 2, 3, 4, 5]}
-                renderItem={() => <OcurrencesListModalItem />}
+                renderItem={() => <OccurrencesListModalItem />}
               />
             </VStack>
           </VStack>
@@ -96,4 +96,4 @@ function OcurrencesListModal({
   );
 }
 
-export default OcurrencesListModal;
+export default OccurrencesListModal;

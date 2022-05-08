@@ -24,8 +24,8 @@ function NurseActions({ prescription }: NurseActionProps) {
     });
   }, []);
 
-  const onPressOccurence = React.useCallback(() => {
-    navigation.navigate('OccurenceModal', {
+  const onPressOccurrence = React.useCallback(() => {
+    navigation.navigate('OccurrenceModal', {
       onConfirm: () => {
         console.log('ok');
       },
@@ -61,7 +61,7 @@ function NurseActions({ prescription }: NurseActionProps) {
         background="red.button"
         color="black"
         borderRadius="36px"
-        onPress={onPressOccurence}
+        onPress={onPressOccurrence}
       >
         <Text color="black" marginX="16px" marginY="-2px">
           Registrar Ocorrência
@@ -82,8 +82,8 @@ function NurseActions({ prescription }: NurseActionProps) {
 }
 
 function DoctorActions() {
-  const onSeeOcurrences = React.useCallback(() => {
-    navigation.navigate('OcurrencesListModal', undefined);
+  const onSeeOccurrences = React.useCallback(() => {
+    navigation.navigate('OccurrencesListModal', undefined);
   }, []);
 
   return (
@@ -92,7 +92,7 @@ function DoctorActions() {
         background="white"
         color="black"
         borderRadius="36px"
-        onPress={onSeeOcurrences}
+        onPress={onSeeOccurrences}
       >
         <Text color="black" marginX="16px" marginY="-2px">
           Ver Ocorrências
