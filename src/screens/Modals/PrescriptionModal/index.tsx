@@ -203,7 +203,7 @@ function OccurenceModal({
             </VStack>
           </FormControl>
 
-          {/* <FormControl isRequired isInvalid={'horario' in errors}>
+          <FormControl isRequired isInvalid={'horario_previsto' in errors}>
             <VStack w="100%">
               <FormControl.Label>Horário:</FormControl.Label>
               <Controller
@@ -211,16 +211,16 @@ function OccurenceModal({
                 render={({ field: { onChange, value } }) => (
                   <DateTimePicker
                     value={value}
-                    mode="time"
+                    mode="datetime"
                     onChange={(_e: any, date?: Date) => onChange(date)}
                   />
                 )}
-                defaultValue={new Date(0)}
-                name="horario"
+                defaultValue={new Date()}
+                name="horario_previsto"
                 rules={{ required: 'Campo obrigatório' }}
               />
             </VStack>
-          </FormControl> */}
+          </FormControl>
           <HStack space={2}>
             <Button
               borderRadius="36px"

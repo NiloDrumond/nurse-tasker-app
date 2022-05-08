@@ -9,5 +9,5 @@ export type PrescriptionProps = {
 
 export type CreatePrescriptionData = Pick<
   IPrescription,
-  'nome_droga' | 'dosagem' | 'cpf_paciente'
+  'nome_droga' | 'dosagem' | 'cpf_paciente' | 'horario_previsto'
 >;
