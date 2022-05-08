@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Center } from 'native-base';
-import SignIn from '../screens/Auth/SignIn';
+import SelectUser from '../screens/Auth/SelectUser';
 
 const Auth = createStackNavigator();
 
@@ -12,8 +11,7 @@ function AuthRoutes() {
         headerShown: false,
       }}
     >
-      <Auth.Screen name="SignIn" component={SignIn} />
-      <Auth.Screen name="Modal" component={SignIn} />
+      <Auth.Screen name="SignIn" component={SelectUser} />
     </Auth.Navigator>
   );
 }

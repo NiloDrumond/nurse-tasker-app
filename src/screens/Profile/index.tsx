@@ -11,23 +11,30 @@ import {
   FlatList,
 } from 'native-base';
 import { Entypo, Ionicons } from '@expo/vector-icons';
-import { TouchableHighlight } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
-import AddButton from '@/components/AddButton';
-import Prescription from '../Home/components/Prescription/index';
+import { useUser } from '@/hooks/User/useUser';
+import { getRoleText } from '@/utils/getRoleText';
+import { useAuth } from '@/hooks/Auth/useAuth';
 
-function Profile({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
+function Profile({
+  navigation,
+}: StackScreenProps<AppStackParamList, 'Profile'>) {
   const bg = useBackgroundColor();
-
-  const handleCreate = React.useCallback(() => {
-    console.log('add');
-  }, []);
+  const { signOut } = useAuth();
+  const { nome, cpf, funcao } = useUser();
 
   return (
     <Center flex={1} bg={bg}>
-      <VStack position="relative" justifyContent="center" w="80%" h="90%" mb="20%" space={18}>
+      <VStack
+        position="relative"
+        justifyContent="center"
+        w="80%"
+        h="90%"
+        mb="20%"
+        space={18}
+      >
         <HStack
           justifyItems="space-evenly"
           alignItems="center"
@@ -40,15 +47,15 @@ function Profile({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
 
           <VStack justifyItems="space-evenly">
             <Text color="black" fontSize="24px">
-              Renata dos Santos
+              {nome}
             </Text>
             <Text color="black" fontSize="18px">
-              CPF: 110.231.235-87
+              CPF: {cpf}
             </Text>
-            <Text>Cargo: Médico</Text>
+            <Text>Cargo: {getRoleText(funcao)}</Text>
           </VStack>
         </HStack>
-        <Button mt={2} colorScheme="red">
+        <Button onPress={signOut} mt={2} colorScheme="red">
           Logout
         </Button>
       </VStack>

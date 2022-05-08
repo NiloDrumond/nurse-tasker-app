@@ -5,7 +5,7 @@ import { RepassProps } from '@/screens/Modals/RepassModal/RepassModal.types';
 
 export type AppStackParamList = {
   Home: undefined;
-  Profile: { userId: string };
+  Profile: undefined;
   OcurrencesListModal: undefined;
   AskModal: AskProps;
   OccurenceModal: OccurenceProps;

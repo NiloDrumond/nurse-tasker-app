@@ -1,20 +1,21 @@
 import React from 'react';
 
-import Loading from '@/screens/Loading';
 import { AuthenticatedProvider } from '@/hooks';
+import { UserProvider } from '@/hooks/User/User.provider';
 import { useAuth } from '../hooks/Auth/useAuth';
 import AppRoutes from './app.routes';
 import AuthRoutes from './auth.routes';
 
 function Routes() {
-  const { loading, isAuthenticated } = useAuth();
+  const { selectedUser } = useAuth();
 
-  if (loading) return <Loading />;
-  // if (!isAuthenticated) return <AuthRoutes />;
+  if (!selectedUser) return <AuthRoutes />;
   return (
-    <AuthenticatedProvider>
-      <AppRoutes />
-    </AuthenticatedProvider>
+    <UserProvider user={selectedUser}>
+      <AuthenticatedProvider>
+        <AppRoutes />
+      </AuthenticatedProvider>
+    </UserProvider>
   );
 }
 
