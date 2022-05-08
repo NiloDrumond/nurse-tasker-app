@@ -50,7 +50,9 @@ function OccurrencesListModal({
 
   const renderItem: ListRenderItem<IOccurrence> = React.useCallback(
     ({ item }) => {
-      return <OccurrencesListModalItem occurrence={item} />;
+      return (
+        <OccurrencesListModalItem key={item.id_ocorrencia} occurrence={item} />
+      );
     },
     [],
   );

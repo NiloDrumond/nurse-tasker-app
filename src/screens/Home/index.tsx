@@ -70,7 +70,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
             w="100%"
             data={data}
             renderItem={({ item }: ListRenderItemInfo<IPrescription>) => (
-              <Prescription prescription={item} />
+              <Prescription key={item.id_prescricao} prescription={item} />
             )}
           />
         </VStack>

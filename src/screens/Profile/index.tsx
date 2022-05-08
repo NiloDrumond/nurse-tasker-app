@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  Button,
-  Center,
-  HStack,
-  Icon,
-  Input,
-  Text,
-  View,
-  VStack,
-  FlatList,
-} from 'native-base';
-import { Entypo, Ionicons } from '@expo/vector-icons';
+import { Button, Center, HStack, Text, VStack } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
@@ -23,7 +13,7 @@ function Profile({
 }: StackScreenProps<AppStackParamList, 'Profile'>) {
   const bg = useBackgroundColor();
   const { signOut } = useAuth();
-  const { nome, cpf, funcao } = useUser();
+  const { nome, CPF, funcao } = useUser();
 
   return (
     <Center flex={1} bg={bg}>
@@ -49,7 +39,7 @@ function Profile({
               {nome}
             </Text>
             <Text color="black" fontSize="18px">
-              CPF: {cpf}
+              CPF: {CPF}
             </Text>
             <Text>Cargo: {getRoleText(funcao)}</Text>
           </VStack>
