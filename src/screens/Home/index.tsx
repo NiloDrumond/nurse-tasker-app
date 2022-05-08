@@ -67,6 +67,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
             </Button>
           )}
           <FlatList
+            w="100%"
             data={data}
             renderItem={({ item }: ListRenderItemInfo<IPrescription>) => (
               <Prescription prescription={item} />

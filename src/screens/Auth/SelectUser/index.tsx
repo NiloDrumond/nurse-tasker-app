@@ -5,14 +5,15 @@ import { IUser } from '@/modules/shared/interfaces';
 import { Center, VStack, FlatList, Text, HStack, Icon } from 'native-base';
 import { getRoleText } from '@/utils/getRoleText';
 import { Feather } from '@expo/vector-icons';
+import Loading from '@/components/Loading';
 
 const SelectUser: React.FC = () => {
-  const { users, selectUser } = useAuth();
+  const { users, selectUser, isLoading } = useAuth();
 
   const renderItem: ListRenderItem<IUser> = React.useCallback(
     ({ item }) => {
       return (
-        <TouchableHighlight key={item.cpf} onPress={() => selectUser(item)}>
+        <TouchableHighlight key={item.CPF} onPress={() => selectUser(item)}>
           <HStack
             mb={2}
             alignItems="center"
@@ -26,7 +27,7 @@ const SelectUser: React.FC = () => {
 
             <VStack>
               <Text fontWeight={600}>{item.nome}</Text>
-              <Text>{item.cpf}</Text>
+              <Text>{item.CPF}</Text>
               <Text>{getRoleText(item.funcao)}</Text>
             </VStack>
           </HStack>
@@ -51,7 +52,11 @@ const SelectUser: React.FC = () => {
         <Text mb={2} fontWeight={600} fontSize="xl" color="black">
           Escolha um usuário para testar
         </Text>
-        <FlatList w="80%" data={users} renderItem={renderItem} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <FlatList w="80%" data={users} renderItem={renderItem} />
+        )}
       </VStack>
     </Center>
   );

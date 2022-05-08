@@ -26,14 +26,14 @@ import { createOccurrenceService } from '@/services/occurrences/createOccurrence
 import { useUser } from '@/hooks/User/useUser';
 import { occurrenceTypes } from '@/modules/shared/interfaces';
 import { getOccurrenceTypeText } from '@/utils/getOccurrenceTypeText';
-import { CreateOccurrenceData } from './OccurenceModal.types';
+import { CreateOccurrenceData } from './OccurrenceModal.types';
 
 function OccurrenceModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'OccurrenceModal'>) {
-  const { onCancel, onConfirm, subtitle, title, prescriptionId } = route.params;
-  const { cpf } = useUser();
+  const { onCancel, onConfirm, title, prescriptionId } = route.params;
+  const { CPF } = useUser();
   const { current } = useCardAnimation();
   const {
     handleSubmit,
@@ -44,14 +44,14 @@ function OccurrenceModal({
   const handleConfirm = React.useCallback(
     async (data: CreateOccurrenceData) => {
       try {
-        await createOccurrenceService(data, cpf, prescriptionId);
+        await createOccurrenceService(data, CPF, prescriptionId);
         onConfirm();
         navigation.goBack();
       } catch {
         handleError({ title: 'Erro', message: 'Falha ao criar prescrição' });
       }
     },
-    [onConfirm, navigation, cpf, prescriptionId],
+    [onConfirm, navigation, CPF, prescriptionId],
   );
 
   const handleInvalid = React.useCallback(
@@ -107,10 +107,6 @@ function OccurrenceModal({
             </Text>
             <CloseButton />
           </Flex>
-          <Text fontWeight={600} mb={2} fontSize="md">
-            {subtitle}
-          </Text>
-
           <FormControl isRequired isInvalid={'tipo' in errors}>
             <VStack w="100%">
               <FormControl.Label>Tipo:</FormControl.Label>

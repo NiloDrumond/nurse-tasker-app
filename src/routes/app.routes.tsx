@@ -6,10 +6,15 @@ import OccurrenceModal from '@/screens/Modals/OccurrenceModal';
 import RepassModal from '@/screens/Modals/RepassModal';
 import PrescriptionModal from '@/screens/Modals/PrescriptionModal';
 import OccurrencesListModal from '@/screens/Modals/OccurrencesListModal';
+import { useData } from '@/hooks/Data/useAuth';
+import LoadingScreen from '@/screens/Loading';
 
 const Stack = createStackNavigator();
 
 function AppRoutes() {
+  const { isLoading } = useData();
+
+  if (isLoading) return <LoadingScreen />;
   return (
     <Stack.Navigator
       screenOptions={{

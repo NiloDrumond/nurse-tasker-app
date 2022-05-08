@@ -1,9 +1,15 @@
 export type UserRole = 'M' | 'F' | 'E';
 
 export interface IUser {
-  cpf: string;
+  CPF: string;
   nome: string;
   funcao: UserRole;
+}
+
+export interface IPatient {
+  CPF: string;
+  nome: string;
+  observacao: string;
 }
 
 export type PrescriptionStatus = 'P' | 'D' | 'R' | 'A' | 'F' | 'C';
@@ -17,6 +23,7 @@ export interface IPrescription {
   status_atual: PrescriptionStatus;
   cpf_paciente: string;
   cpf_cadastrante: string;
+  tasks: ITask[];
 }
 
 export const occurrenceTypes = ['EM', 'EP', 'CD', 'RP', 'O'] as const;
@@ -29,4 +36,14 @@ export interface IOccurrence {
   descricao: string;
   cpf_paciente: string;
   usuario_cadastrante: string;
+}
+
+export type TaskStatus = 'P' | 'D' | 'R' | 'A' | 'C';
+
+export interface ITask {
+  id_horario: string;
+  prescricao_associado: string;
+  status_correspondente: TaskStatus;
+  horario: Date;
+  cpf_responsavel: string;
 }

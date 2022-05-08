@@ -1,11 +1,21 @@
 import React from 'react';
-import { Box, HStack, View, VStack, Text } from 'native-base';
+import moment from 'moment';
+import { HStack, View, VStack, Text } from 'native-base';
+import { ITask } from '@/modules/shared/interfaces';
+import { getTaskStatusText } from '@/utils/getTaskStatusText';
+import { useData } from '@/hooks/Data/useAuth';
 
-function PrescriptionTask() {
+type PrescriptionTaskProps = {
+  task: ITask;
+};
+
+function PrescriptionTask({ task }: PrescriptionTaskProps) {
+  const { users } = useData();
+
   return (
     <HStack space="10px" alignItems="center">
       <Text color="black" fontSize="16px">
-        14:00
+        {moment(task.horario).format('HH:mm')}
       </Text>
       <View
         width="12px"
@@ -15,10 +25,10 @@ function PrescriptionTask() {
       />
       <VStack flex={1}>
         <Text color="black" fontSize="10px" fontWeight="bold">
-          Medicamento Prescrito
+          {getTaskStatusText(task.status_correspondente)}
         </Text>
         <Text color="black" fontSize="10px">
-          Médico: Fábio da Silvaasdasdasdasdasdasds
+          Médico: {users[task.cpf_responsavel].nome}
         </Text>
       </VStack>
     </HStack>

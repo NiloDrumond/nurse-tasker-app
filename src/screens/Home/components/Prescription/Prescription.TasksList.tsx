@@ -1,14 +1,21 @@
 import React from 'react';
 import { FlatList, Box, View } from 'native-base';
+import { ITask } from '@/modules/shared/interfaces';
+import { ListRenderItem } from 'react-native';
 import PrescriptionTask from './Prescription.Task';
 
-function PrescriptionTasksList() {
+type PrescriptionTasksListProps = {
+  tasks: ITask[];
+};
+
+function PrescriptionTasksList({ tasks }: PrescriptionTasksListProps) {
+  const renderItem: ListRenderItem<ITask> = React.useCallback(({ item }) => {
+    return <PrescriptionTask key={item.id_horario} task={item} />;
+  }, []);
+
   return (
     <View position="relative">
-      <FlatList
-        data={[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }]}
-        renderItem={({ index, item }) => <PrescriptionTask key={item.id} />}
-      />
+      <FlatList data={tasks} renderItem={renderItem} />
       <Box
         position="absolute"
         borderColor="#749B97"

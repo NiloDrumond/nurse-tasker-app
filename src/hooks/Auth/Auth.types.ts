@@ -5,4 +5,5 @@ export type AuthContextData = {
   selectedUser?: IUser;
   signOut: () => void;
   users: IUser[];
+  isLoading: boolean;
 };

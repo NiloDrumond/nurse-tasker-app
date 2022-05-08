@@ -3,6 +3,8 @@ import { Text, HStack, VStack, Flex } from 'native-base';
 import { TouchableHighlight } from 'react-native';
 import { useUser } from '@/hooks/User/useUser';
 import { IPrescription } from '@/modules/shared/interfaces';
+import { useData } from '@/hooks/Data/useAuth';
+import moment from 'moment';
 import { DoctorActions, NurseActions } from './Prescription.Actions';
 import PrescriptionTasksList from './Prescription.TasksList';
 
@@ -12,6 +14,7 @@ type PrescriptionProps = {
 
 function Prescription({ prescription }: PrescriptionProps) {
   const { funcao } = useUser();
+  const { users, patients } = useData();
   const [showDetails, setShowDetails] = React.useState(false);
 
   return (
@@ -26,25 +29,25 @@ function Prescription({ prescription }: PrescriptionProps) {
         overflow="hidden"
       >
         <HStack overflow="hidden" alignItems="center" space={4} w="100%">
-          <Flex w="35%">
-            <Text color="black" fontSize="36px">
-              14:30
+          <Flex w="25%">
+            <Text color="black" fontSize="32px">
+              {moment(prescription.horario_previsto).format('HH:mm')}
             </Text>
           </Flex>
-          <VStack w="65%" overflow="hidden">
+          <VStack w="75%" overflow="hidden">
             <Text color="black" fontSize="14px">
-              Médico: {prescription.cpf_cadastrante}
+              Médico: {users[prescription.cpf_cadastrante].nome}
             </Text>
             <Text color="black" fontSize="14px">
               Medicamento: {prescription.nome_droga}
             </Text>
             <Text flex={1} color="black" fontSize="14px">
-              Paciente: {prescription.cpf_paciente}
+              Paciente: {patients[prescription.cpf_paciente].nome}
             </Text>
           </VStack>
         </HStack>
 
-        {showDetails && <PrescriptionTasksList />}
+        {showDetails && <PrescriptionTasksList tasks={prescription.tasks} />}
         {showDetails &&
           (funcao === 'E' ? (
             <NurseActions prescription={prescription} />

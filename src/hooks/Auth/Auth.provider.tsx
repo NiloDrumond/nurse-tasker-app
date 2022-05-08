@@ -1,17 +1,23 @@
+import config from '@/config';
+import api from '@/modules/shared/http/ApiHelper';
 import { IUser } from '@/modules/shared/interfaces';
 import React, { createContext } from 'react';
+import useSWR from 'swr';
 import { AuthContextData } from './Auth.types';
 
 export const AuthContext = createContext<AuthContextData>(
   {} as AuthContextData,
 );
 
-const users: IUser[] = [
-  { cpf: '123', funcao: 'E', nome: 'Patricia' },
-  { cpf: '123123', funcao: 'M', nome: 'Carinha' },
-];
-
 export const AuthProvider: React.FC = ({ children }) => {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const { data } = useSWR<IUser[]>(config.USERS_URL, async (url) => {
+    setIsLoading(true);
+    const response = await api.get<IUser[]>({ url });
+    setIsLoading(false);
+    return response.body;
+  });
+
   const [selectedUser, setSelectedUser] = React.useState<IUser | undefined>(
     undefined,
   );
@@ -24,10 +30,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     () => ({
       selectUser: setSelectedUser,
       signOut,
-      users,
+      users: data || [],
       selectedUser,
+      isLoading,
     }),
-    [selectedUser, signOut],
+    [selectedUser, signOut, isLoading, data],
   );
 
   return (

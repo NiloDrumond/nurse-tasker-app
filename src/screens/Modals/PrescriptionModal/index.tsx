@@ -19,13 +19,20 @@ import { useForm, Controller, FieldErrors } from 'react-hook-form';
 import handleError from '@/utils/errors/handleError';
 import { useUser } from '@/hooks/User/useUser';
 import { createPrescriptionService } from '@/services/prescriptions/createPrescriptionService';
+import config from '@/config';
+import api from '@/modules/shared/http/ApiHelper';
+import { IPatient } from '@/modules/shared/interfaces';
+import useSWR from 'swr';
+import Loading from '@/components/Loading';
+import { useData } from '@/hooks/Data/useAuth';
 import { CreatePrescriptionData } from './PrescriptionModal.types';
 
 function OccurrenceModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'OccurrenceModal'>) {
-  const { cpf } = useUser();
+  const { patients } = useData();
+  const { CPF } = useUser();
   const {
     handleSubmit,
     control,
@@ -37,14 +44,14 @@ function OccurrenceModal({
   const handleConfirm = React.useCallback(
     async (data: CreatePrescriptionData) => {
       try {
-        await createPrescriptionService(data, cpf);
+        await createPrescriptionService(data, CPF);
         onConfirm();
         navigation.goBack();
       } catch {
         handleError({ title: 'Erro', message: 'Falha ao criar prescrição' });
       }
     },
-    [onConfirm, navigation, cpf],
+    [onConfirm, navigation, CPF],
   );
 
   const handleInvalid = React.useCallback(
@@ -58,6 +65,10 @@ function OccurrenceModal({
     if (onCancel) onCancel();
     navigation.goBack();
   }, [onCancel, navigation]);
+
+  const data = React.useMemo(() => {
+    return Object.values(patients);
+  }, [patients]);
 
   return (
     <View
@@ -115,14 +126,14 @@ function OccurrenceModal({
                     mt={1}
                     onValueChange={(itemValue) => onChange(itemValue)}
                   >
-                    <Select.Item label="Dipirona" value="dip" />
-                    <Select.Item label="Aspirina" value="asp" />
-                    <Select.Item label="Omeprazol" value="ome" />
-                    <Select.Item label="Amoxicilina" value="amo" />
-                    <Select.Item label="Azitromicina" value="azi" />
+                    <Select.Item label="Dipirona" value="Dipirona" />
+                    <Select.Item label="Aspirina" value="Aspirina" />
+                    <Select.Item label="Omeprazol" value="Omeprazol" />
+                    <Select.Item label="Amoxicilina" value="Amoxicilina" />
+                    <Select.Item label="Azitromicina" value="Azitromicina" />
                   </Select>
                 )}
-                defaultValue="dip"
+                defaultValue="Dipirona"
                 name="nome_droga"
                 rules={{ required: 'Campo obrigatório' }}
               />
@@ -160,44 +171,45 @@ function OccurrenceModal({
             </FormControl>
           </VStack>
 
-          <FormControl isRequired isInvalid={'cpf_paciente' in errors}>
-            <VStack w="100%">
-              <FormControl.Label fontWeight={600} mb={2} fontSize="md">
-                Selecione o paciente:
-              </FormControl.Label>
-              <Controller
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    selectedValue={value}
-                    accessibilityLabel="Choose Service"
-                    placeholder="Paciente"
-                    _selectedItem={{
-                      bg: 'teal.600',
-                      endIcon: <CheckIcon size="5" />,
-                    }}
-                    mt={1}
-                    onValueChange={(itemValue) => onChange(itemValue)}
-                  >
-                    <Select.Item label="Jorge Silva" value="med" />
-                    <Select.Item label="Ana Cláudia Ribeiro" value="pro" />
-                    <Select.Item label="Priscilla Lemos" value="con" />
-                    <Select.Item label="Lucas Drummond" value="pac" />
-                    <Select.Item label="Pedro Henrique de Castro" value="out" />
-                  </Select>
-                )}
-                defaultValue={undefined}
-                name="cpf_paciente"
-                rules={{ required: 'Campo obrigatório' }}
-              />
+          {data ? (
+            <FormControl isRequired isInvalid={'cpf_paciente' in errors}>
+              <VStack w="100%">
+                <FormControl.Label fontWeight={600} mb={2} fontSize="md">
+                  Selecione o paciente:
+                </FormControl.Label>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <Select
+                      selectedValue={value}
+                      accessibilityLabel="Choose Service"
+                      placeholder="Paciente"
+                      _selectedItem={{
+                        bg: 'teal.600',
+                        endIcon: <CheckIcon size="5" />,
+                      }}
+                      mt={1}
+                      onValueChange={(itemValue) => onChange(itemValue)}
+                    >
+                      {data.map((p) => {
+                        return <Select.Item label={p.nome} value={p.CPF} />;
+                      })}
+                    </Select>
+                  )}
+                  name="cpf_paciente"
+                  rules={{ required: 'Campo obrigatório' }}
+                />
 
-              <FormControl.ErrorMessage
-                leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                {errors.cpf_paciente?.message}
-              </FormControl.ErrorMessage>
-            </VStack>
-          </FormControl>
+                <FormControl.ErrorMessage
+                  leftIcon={<WarningOutlineIcon size="xs" />}
+                >
+                  {errors.cpf_paciente?.message}
+                </FormControl.ErrorMessage>
+              </VStack>
+            </FormControl>
+          ) : (
+            <Loading />
+          )}
 
           <FormControl isRequired isInvalid={'horario_previsto' in errors}>
             <VStack w="100%">
