@@ -41,7 +41,6 @@ const SelectUser: React.FC = () => {
       <VStack
         w="80%"
         maxH="80%"
-        justifyItems="space-evenly"
         alignItems="center"
         space="2"
         bg="white"

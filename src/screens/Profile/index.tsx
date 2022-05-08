@@ -36,7 +36,6 @@ function Profile({
         space={18}
       >
         <HStack
-          justifyItems="space-evenly"
           alignItems="center"
           space={2}
           bg="white"
@@ -45,7 +44,7 @@ function Profile({
         >
           <Ionicons name="person" size={60} color="black" />
 
-          <VStack justifyItems="space-evenly">
+          <VStack>
             <Text color="black" fontSize="24px">
               {nome}
             </Text>

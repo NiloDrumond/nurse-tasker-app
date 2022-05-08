@@ -68,7 +68,6 @@ function OcurrencesListModal({
         <Center flex={1}>
           <VStack position="relative" maxHeight="100%" space={18}>
             <VStack
-              justifyItems="space-evenly"
               alignItems="center"
               space="2"
               bg="white"
