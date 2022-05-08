@@ -1,8 +1,16 @@
 import React from 'react';
 import { VStack, Text, Center, Pressable } from 'native-base';
 import navigation from '@/services/navigation';
+import { IOccurrence } from '@/modules/shared/interfaces';
+import { getOccurrenceTypeText } from '@/utils/getOccurrenceTypeText';
 
-function OccurrencesListModalItem() {
+type OccurrencesListModalItemProps = {
+  occurrence: IOccurrence;
+};
+
+function OccurrencesListModalItem({
+  occurrence,
+}: OccurrencesListModalItemProps) {
   const handlePress = React.useCallback(() => {
     navigation.navigate('AskModal', {
       onConfirm: () => {
@@ -14,27 +22,25 @@ function OccurrencesListModalItem() {
   }, []);
 
   return (
-    <Pressable onPress={handlePress}>
-      <VStack
-        mb={2}
-        alignItems="flex-start"
-        space="1"
-        bg="background.box"
-        padding="16px 24px"
-        borderRadius="md"
-      >
-        <Center w="100%">
-          <Text fontSize="lg" fontWeight={700}>
-            Erro na administração
-          </Text>
-        </Center>
-        <Text>Paciente: Victor Teixeira</Text>
-        <Text>Responsável: Bárbara Silva</Text>
-        <Text>
-          Descrição: Paciente possu[ia alergia não conhecida com o medicamento
+    // <Pressable>
+    <VStack
+      mb={2}
+      alignItems="flex-start"
+      space="1"
+      bg="background.box"
+      padding="16px 24px"
+      borderRadius="md"
+    >
+      <Center w="100%">
+        <Text fontSize="lg" fontWeight={700}>
+          {getOccurrenceTypeText(occurrence.tipo)}
         </Text>
-      </VStack>
-    </Pressable>
+      </Center>
+      <Text>Paciente: {occurrence.cpf_paciente}</Text>
+      <Text>Responsável: {occurrence.usuario_cadastrante}</Text>
+      <Text>Descrição: {occurrence.descricao}</Text>
+    </VStack>
+    // </Pressable>
   );
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
 import DateTimePicker from '@react-native-community/datetimepicker';

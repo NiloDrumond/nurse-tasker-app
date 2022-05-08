@@ -22,17 +22,17 @@ function NurseActions({ prescription }: NurseActionProps) {
       subtitle: 'Você deseja concluir essa atividade?',
       title: 'Atenção!',
     });
-  }, []);
+  }, [prescription]);
 
   const onPressOccurrence = React.useCallback(() => {
     navigation.navigate('OccurrenceModal', {
       onConfirm: () => {
         console.log('ok');
       },
-      subtitle: 'Selecione o tipo de ocorrência:',
+      prescriptionId: prescription.id_prescricao,
       title: 'Formulário de ocorrência',
     });
-  }, []);
+  }, [prescription]);
 
   const onPressRepass = React.useCallback(() => {
     navigation.navigate('RepassModal', {
@@ -81,10 +81,16 @@ function NurseActions({ prescription }: NurseActionProps) {
   );
 }
 
-function DoctorActions() {
+type DoctorActionProps = {
+  prescription: IPrescription;
+};
+
+function DoctorActions({ prescription }: DoctorActionProps) {
   const onSeeOccurrences = React.useCallback(() => {
-    navigation.navigate('OccurrencesListModal', undefined);
-  }, []);
+    navigation.navigate('OccurrencesListModal', {
+      prescriptionId: prescription.id_prescricao,
+    });
+  }, [prescription]);
 
   return (
     <VStack space="10px">

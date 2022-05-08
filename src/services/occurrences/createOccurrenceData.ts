@@ -8,7 +8,7 @@ async function createOccurrenceService(
   prescricao_associada: string,
 ) {
   await api.post({
-    url: config.OCCURRENCES,
+    url: config.OCCURRENCES_URL,
     body: { ...data, usuario_cadastrante, prescricao_associada },
   });
 }
