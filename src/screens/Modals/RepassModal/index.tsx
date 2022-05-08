@@ -21,39 +21,13 @@ import {
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import useBackgroundColor from '@/styles/hooks/useBackgroundColor';
+import useSWR from 'swr';
+import { IUser } from '@/modules/shared/interfaces';
+import api from '@/modules/shared/http/ApiHelper';
+import config from '@/config';
 
 
-const data = [{
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  fullName: "Jorge Silva"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
-  fullName: "Ana Cláudia Ribeiro"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
-  fullName: "Priscilla Lemos"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
-  fullName: "Lucas Drummond"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
-  fullName: "Pedro Henrique de Castro"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  fullName: "Jorge Silva"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
-  fullName: "Ana Cláudia Ribeiro"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
-  fullName: "Priscilla Lemos"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
-  fullName: "Lucas Drummond"
-}, {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
-  fullName: "Pedro Henrique de Castro"
-}]
+
 
 function RepassModal({
   route,
@@ -61,6 +35,15 @@ function RepassModal({
 }: StackScreenProps<AppStackParamList, 'RepassModal'>) {
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
+
+  const { data } = useSWR<IUser[]>(
+    config.PRESCRIPTIONS_URL,
+    async (url) => {
+      const response = await api.get<IUser[]>({ url });
+      return response.body;
+    },
+    { refreshInterval: 5000 },
+  );
 
   const handleChoice = React.useCallback((choice: string) => {
     navigation.navigate('AskModal', {
@@ -116,19 +99,19 @@ function RepassModal({
               <CloseIcon />
             </Button>
           </HStack>
-          
+
           <FlatList
             data={data}
             keyExtractor={item=>item.id}
-            renderItem={({item}) => 
+            renderItem={({item}) =>
             <Box borderBottomWidth={1} borderColor="coolGray.200">
-              <Button 
-                onPress={() => {handleChoice(item.fullName)}}
-                colorScheme="transparent" 
+              <Button
+                onPress={() => {handleChoice(item.CPF)}}
+                colorScheme="transparent"
                 _hover={{
                   bg: '#00000070'
                 }}>
-              <Text fontSize="md">{item.fullName}</Text>
+              <Text fontSize="md">{item.nome}</Text>
             </Button>
             </Box>
           }

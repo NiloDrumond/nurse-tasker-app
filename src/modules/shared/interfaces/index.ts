@@ -36,6 +36,7 @@ export interface IOccurrence {
   descricao: string;
   cpf_paciente: string;
   usuario_cadastrante: string;
+
 }
 
 export type TaskStatus = 'P' | 'D' | 'R' | 'A' | 'C';
