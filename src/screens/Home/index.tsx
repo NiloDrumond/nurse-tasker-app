@@ -7,8 +7,19 @@ import useSWR from 'swr';
 import config from '@/config';
 import api from '@/modules/shared/http/ApiHelper';
 import { IPrescription } from '@/modules/shared/interfaces';
-import { ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo, Platform } from 'react-native';
 import Prescription from './components/Prescription';
+
+const getTabHeight = (): number => {
+  const isiOS = Platform.OS === 'ios';
+  const tabHeight = 65;
+  const notchHeight = 100;
+
+  if (isiOS) {
+    return notchHeight;
+  }
+  return tabHeight;
+};
 
 function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
   const { data } = useSWR<IPrescription[]>(
@@ -32,9 +43,14 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
 
   return (
     <Center flex={1} bg="coolGray.700">
-      <VStack position="relative" w="90%" h="90%" mb="20%" space={18}>
+      <VStack
+        position="relative"
+        w="90%"
+        h="80%"
+        mb={getTabHeight()}
+        space={18}
+      >
         <VStack
-          justifyItems="space-evenly"
           alignItems="center"
           space="2"
           bg="white"

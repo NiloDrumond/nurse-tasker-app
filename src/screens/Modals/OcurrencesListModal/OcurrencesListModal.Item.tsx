@@ -17,7 +17,6 @@ function OcurrencesListModalItem() {
     <Pressable onPress={handlePress}>
       <VStack
         mb={2}
-        justifyItems="space-evenly"
         alignItems="flex-start"
         space="1"
         bg="background.box"

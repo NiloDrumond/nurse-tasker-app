@@ -19,7 +19,6 @@ function Prescription({ prescription }: PrescriptionProps) {
     <TouchableHighlight onPress={() => setShowBox(!showBox)}>
       <VStack
         mb={2}
-        justifyItems="space-evenly"
         alignItems="center"
         space="28px"
         bg="background.box"
@@ -27,13 +26,7 @@ function Prescription({ prescription }: PrescriptionProps) {
         borderRadius="md"
         overflow="hidden"
       >
-        <HStack
-          overflow="hidden"
-          justifyItems="space-evenly"
-          alignItems="center"
-          space={4}
-          w="100%"
-        >
+        <HStack overflow="hidden" alignItems="center" space={4} w="100%">
           <Flex w="35%">
             <Text color="black" fontSize="36px">
               14:30
