@@ -11,12 +11,15 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [isLoading, setIsLoading] = React.useState(true);
-  const { data } = useSWR<IUser[]>(config.USERS_URL, async (url) => {
-    setIsLoading(true);
-    const response = await api.get<IUser[]>({ url });
-    setIsLoading(false);
-    return response.body;
-  });
+  const { data } = useSWR<IUser[]>(
+    config.USERS_URL,
+    async (url) => {
+      const response = await api.get<IUser[]>({ url });
+      setIsLoading(false);
+      return response.body;
+    },
+    { refreshInterval: 5000 },
+  );
 
   const [selectedUser, setSelectedUser] = React.useState<IUser | undefined>(
     undefined,

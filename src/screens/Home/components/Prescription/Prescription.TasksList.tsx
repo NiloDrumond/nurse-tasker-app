@@ -14,7 +14,7 @@ function PrescriptionTasksList({ tasks }: PrescriptionTasksListProps) {
   }, []);
 
   return (
-    <View position="relative">
+    <View>
       <FlatList data={tasks} renderItem={renderItem} />
       {tasks.length > 1 && (
         <Box

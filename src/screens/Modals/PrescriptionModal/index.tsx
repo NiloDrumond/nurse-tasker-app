@@ -1,6 +1,5 @@
 import React from 'react';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   Text,
   View,
@@ -19,12 +18,9 @@ import { useForm, Controller, FieldErrors } from 'react-hook-form';
 import handleError from '@/utils/errors/handleError';
 import { useUser } from '@/hooks/User/useUser';
 import { createPrescriptionService } from '@/services/prescriptions/createPrescriptionService';
-import config from '@/config';
-import api from '@/modules/shared/http/ApiHelper';
-import { IPatient } from '@/modules/shared/interfaces';
-import useSWR from 'swr';
 import Loading from '@/components/Loading';
 import { useData } from '@/hooks/Data/useAuth';
+import DatePicker from '@/components/inputs/DatePicker';
 import { CreatePrescriptionData } from './PrescriptionModal.types';
 
 function OccurrenceModal({
@@ -106,75 +102,73 @@ function OccurrenceModal({
           p={8}
           space={3}
         >
-          <Text fontWeight={600} mb={2} fontSize="l">
+          <Text fontWeight={600} fontSize="lg">
             {title}
           </Text>
-          <VStack w="100%">
-            <FormControl isRequired isInvalid={'nome_droga' in errors}>
-              <FormControl.Label>Medicamento</FormControl.Label>
+          <FormControl isRequired isInvalid={'nome_droga' in errors}>
+            <FormControl.Label>Medicamento:</FormControl.Label>
+            <Controller
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  selectedValue={value}
+                  accessibilityLabel="Choose Service"
+                  placeholder="Medicamento"
+                  _selectedItem={{
+                    bg: 'teal.600',
+                    endIcon: <CheckIcon size="5" />,
+                  }}
+                  onValueChange={(itemValue) => onChange(itemValue)}
+                >
+                  <Select.Item label="Dipirona" value="Dipirona" />
+                  <Select.Item label="Aspirina" value="Aspirina" />
+                  <Select.Item label="Omeprazol" value="Omeprazol" />
+                  <Select.Item label="Amoxicilina" value="Amoxicilina" />
+                  <Select.Item label="Azitromicina" value="Azitromicina" />
+                </Select>
+              )}
+              name="nome_droga"
+              rules={{ required: 'Campo obrigatório' }}
+            />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {errors.nome_droga?.message}
+            </FormControl.ErrorMessage>
+          </FormControl>
+
+          <FormControl isRequired isInvalid={'dosagem' in errors}>
+            <FormControl.Label>Dosagem:</FormControl.Label>
+            <HStack alignItems="center">
               <Controller
                 control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    selectedValue={value}
-                    accessibilityLabel="Choose Service"
-                    placeholder="Medicamento"
-                    _selectedItem={{
-                      bg: 'teal.600',
-                      endIcon: <CheckIcon size="5" />,
-                    }}
-                    mt={1}
-                    onValueChange={(itemValue) => onChange(itemValue)}
-                  >
-                    <Select.Item label="Dipirona" value="Dipirona" />
-                    <Select.Item label="Aspirina" value="Aspirina" />
-                    <Select.Item label="Omeprazol" value="Omeprazol" />
-                    <Select.Item label="Amoxicilina" value="Amoxicilina" />
-                    <Select.Item label="Azitromicina" value="Azitromicina" />
-                  </Select>
+                render={({ field: { onBlur, onChange, value } }) => (
+                  <Input
+                    onBlur={onBlur}
+                    placeholder="Dosagem"
+                    type="number"
+                    keyboardType="numeric"
+                    onChangeText={(v) => onChange(parseFloat(v))}
+                    value={value ? value.toString() : undefined}
+                    flex={1}
+                  />
                 )}
-                defaultValue="Dipirona"
-                name="nome_droga"
+                name="dosagem"
                 rules={{ required: 'Campo obrigatório' }}
               />
-              <FormControl.ErrorMessage
-                leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                {errors.nome_droga?.message}
-              </FormControl.ErrorMessage>
-            </FormControl>
-
-            <FormControl isRequired isInvalid={'dosagem' in errors}>
-              <HStack alignItems="center" mt={2}>
-                <Controller
-                  control={control}
-                  render={({ field: { onBlur, onChange, value } }) => (
-                    <Input
-                      onBlur={onBlur}
-                      placeholder="Dosagem"
-                      type="number"
-                      onChange={(e) => onChange(e)}
-                      value={value.toString()}
-                    />
-                  )}
-                  name="dosagem"
-                  rules={{ required: 'Campo obrigatório' }}
-                  defaultValue={0}
-                />
-                <Text> ml</Text>
-              </HStack>
-              <FormControl.ErrorMessage
-                leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                {errors.dosagem?.message}
-              </FormControl.ErrorMessage>
-            </FormControl>
-          </VStack>
+              <Text ml={2}>ml</Text>
+            </HStack>
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {errors.dosagem?.message}
+            </FormControl.ErrorMessage>
+          </FormControl>
 
           {data ? (
             <FormControl isRequired isInvalid={'cpf_paciente' in errors}>
               <VStack w="100%">
-                <FormControl.Label fontWeight={600} mb={2} fontSize="md">
+                <FormControl.Label fontWeight={600} fontSize="md">
                   Selecione o paciente:
                 </FormControl.Label>
                 <Controller
@@ -188,7 +182,6 @@ function OccurrenceModal({
                         bg: 'teal.600',
                         endIcon: <CheckIcon size="5" />,
                       }}
-                      mt={1}
                       onValueChange={(itemValue) => onChange(itemValue)}
                     >
                       {data.map((p) => {
@@ -217,13 +210,8 @@ function OccurrenceModal({
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <DateTimePicker
-                    value={value}
-                    mode="datetime"
-                    onChange={(_e: any, date?: Date) => onChange(date)}
-                  />
+                  <DatePicker onChange={onChange} value={value} />
                 )}
-                defaultValue={new Date()}
                 name="horario_previsto"
                 rules={{ required: 'Campo obrigatório' }}
               />
@@ -233,7 +221,7 @@ function OccurrenceModal({
             <Button
               borderRadius="36px"
               onPress={handleCancel}
-              colorScheme="coolGray"
+              variant="outline"
             >
               <Text marginX="16px" marginY="-2px">
                 Cancelar
