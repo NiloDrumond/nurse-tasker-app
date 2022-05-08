@@ -19,7 +19,6 @@ export const DataProvider: React.FC = ({ children }) => {
   const { data: patientsData } = useSWR<IPatient[]>(
     config.PATIENTS_URL,
     async (url) => {
-      setIsLoading(true);
       const response = await api.get<IPatient[]>({ url });
       setIsLoading(false);
       return response.body;

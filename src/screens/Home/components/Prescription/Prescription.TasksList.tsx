@@ -16,15 +16,17 @@ function PrescriptionTasksList({ tasks }: PrescriptionTasksListProps) {
   return (
     <View position="relative">
       <FlatList data={tasks} renderItem={renderItem} />
-      <Box
-        position="absolute"
-        borderColor="#749B97"
-        borderLeftWidth={1}
-        borderStyle="solid"
-        left="50px"
-        top="10%"
-        h="80%"
-      />
+      {tasks.length > 1 && (
+        <Box
+          position="absolute"
+          borderColor="#749B97"
+          borderLeftWidth={1}
+          borderStyle="solid"
+          left="50px"
+          top="10%"
+          h="80%"
+        />
+      )}
     </View>
   );
 }
