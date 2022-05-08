@@ -10,7 +10,6 @@ import {
   CreateRemoteAuthentication,
   LocalAuthentication,
   ManageToken,
-  GetDeviceID,
   BiometricAuthentication,
 } from '@/modules/security/adapters';
 
@@ -52,9 +51,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       await LocalAuthentication.clear();
       dispatch({ type: 'SIGN_OUT' });
       const remoteAuthentication = CreateRemoteAuthentication();
-      await remoteAuthentication.signOut({
-        uuid: GetDeviceID.get(),
-      });
+      // await remoteAuthentication.signOut({
+      // });
       ManageToken.clear();
       if (interceptorRef.current) interceptorRef.current();
       interceptorRef.current = undefined;

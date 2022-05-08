@@ -6,6 +6,7 @@ import OccurenceModal from '@/screens/Modals/OccurenceModal';
 import RepassModal from '@/screens/Modals/RepassModal';
 import OcurrencesListModal from '@/screens/Modals/OcurrencesListModal';
 import { UserProvider } from '@/hooks/User/User.provider';
+import PrescriptionModal from '@/screens/Modals/PrescriptionModal';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,13 @@ function AppRoutes() {
           }}
           name="RepassModal"
           component={RepassModal}
+        />
+        <Stack.Screen
+          options={{
+            presentation: 'transparentModal',
+          }}
+          name="PrescriptionModal"
+          component={PrescriptionModal}
         />
       </Stack.Navigator>
     </UserProvider>

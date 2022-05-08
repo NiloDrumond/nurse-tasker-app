@@ -14,7 +14,6 @@ import {
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
-import { Ionicons, Entypo } from '@expo/vector-icons';
 import CloseButton from '@/components/CloseButton';
 import OcurrencesListModalItem from './OcurrencesListModal.Item';
 

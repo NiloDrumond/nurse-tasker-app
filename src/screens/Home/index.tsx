@@ -3,13 +3,32 @@ import { Button, Center, Text, VStack, FlatList } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useUser } from '@/hooks/User/useUser';
+import useSWR from 'swr';
+import config from '@/config';
+import api from '@/modules/shared/http/ApiHelper';
+import { IPrescription } from '@/modules/shared/interfaces';
+import { ListRenderItemInfo } from 'react-native';
 import Prescription from './components/Prescription';
 
 function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
+  const { data } = useSWR<IPrescription[]>(
+    config.PRESCRIPTIONS_URL,
+    async (url) => {
+      const response = await api.get<IPrescription[]>({ url });
+      return response.body;
+    },
+    { refreshInterval: 5000 },
+  );
+
   const { role } = useUser();
   const handleCreate = React.useCallback(() => {
-    console.log('add');
-  }, []);
+    navigation.navigate('PrescriptionModal', {
+      onConfirm: () => {
+        console.log('ok');
+      },
+      title: 'Formulário de prescrição',
+    });
+  }, [navigation]);
 
   return (
     <Center flex={1} bg="coolGray.700">
@@ -31,7 +50,12 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
               Criar Prescrição
             </Button>
           )}
-          <FlatList data={[1, 2, 3, 4]} renderItem={() => <Prescription />} />
+          <FlatList
+            data={data}
+            renderItem={({ item }: ListRenderItemInfo<IPrescription>) => (
+              <Prescription />
+            )}
+          />
         </VStack>
       </VStack>
     </Center>
