@@ -1,8 +1,8 @@
 import { FeedbackError } from '@/components/FeedbackWindow';
 
-const handleError = (error: Error): void => {
+const handleError = (error: { title?: string; message: string }): void => {
   FeedbackError({
-    mainText: 'Atenção!',
+    mainText: error.title || 'Atenção!',
     subText: error.message,
   });
 };

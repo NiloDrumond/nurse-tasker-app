@@ -6,7 +6,7 @@ import { DoctorActions, NurseActions } from './Prescription.Actions';
 import PrescriptionTasksList from './Prescription.TasksList';
 
 function Prescription() {
-  const { role } = useUser();
+  const { funcao } = useUser();
   const [showBox, setShowBox] = React.useState(false);
 
   return (
@@ -47,7 +47,7 @@ function Prescription() {
         </HStack>
 
         {showBox && <PrescriptionTasksList />}
-        {showBox && (role === 'nurse' ? <NurseActions /> : <DoctorActions />)}
+        {showBox && (funcao === 'E' ? <NurseActions /> : <DoctorActions />)}
       </VStack>
     </TouchableHighlight>
   );

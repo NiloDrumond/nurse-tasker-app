@@ -17,29 +17,45 @@ import {
 } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
-import { IPrescription } from '@/modules/shared/interfaces';
+import { useForm, Controller, FieldErrors } from 'react-hook-form';
+import handleError from '@/utils/errors/handleError';
+import { useUser } from '@/hooks/User/useUser';
+import { createPrescriptionService } from '@/services/prescriptions/createPrescriptionService';
+import { CreatePrescriptionData } from './PrescriptionModal.types';
 
 function OccurenceModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'OccurenceModal'>) {
+  const { cpf } = useUser();
   const {
     handleSubmit,
     register,
     control,
+    setError,
     formState: { errors },
-  } = useForm<IPrescription>();
+  } = useForm<CreatePrescriptionData>();
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
   const handleConfirm = React.useCallback(
-    (data: IPrescription) => {
-      console.log(data);
+    async (data: CreatePrescriptionData) => {
+      try {
+        await createPrescriptionService(data, cpf);
+      } catch {
+        handleError({ title: 'Erro', message: 'Falha ao criar prescrição' });
+      }
       onConfirm();
       navigation.goBack();
     },
-    [onConfirm, navigation],
+    [onConfirm, navigation, cpf],
+  );
+
+  const handleInvalid = React.useCallback(
+    (errors: FieldErrors<CreatePrescriptionData>) => {
+      console.log(errors);
+    },
+    [],
   );
 
   const handleCancel = React.useCallback(() => {
@@ -87,7 +103,7 @@ function OccurenceModal({
             {title}
           </Text>
           <VStack w="100%">
-            <FormControl isRequired isInvalid={'medicamento' in errors}>
+            <FormControl isRequired isInvalid={'nome_droga' in errors}>
               <FormControl.Label>Medicamento</FormControl.Label>
               <Controller
                 control={control}
@@ -111,23 +127,32 @@ function OccurenceModal({
                   </Select>
                 )}
                 defaultValue="dip"
-                name="medicamento"
+                name="nome_droga"
                 rules={{ required: 'Campo obrigatório' }}
               />
               <FormControl.ErrorMessage
                 leftIcon={<WarningOutlineIcon size="xs" />}
               >
-                {errors.medicamento?.message}
+                {errors.nome_droga?.message}
               </FormControl.ErrorMessage>
             </FormControl>
 
-            <FormControl>
+            <FormControl isRequired isInvalid={'dosagem' in errors}>
               <HStack alignItems="center" mt={2}>
-                <Input
-                  {...register('dosagem', { required: 'Campo obrigatório' })}
-                  type="number"
-                  w="80%"
-                  placeholder="Dosagem"
+                <Controller
+                  control={control}
+                  render={({ field: { onBlur, onChange, value } }) => (
+                    <Input
+                      onBlur={onBlur}
+                      placeholder="Dosagem"
+                      type="number"
+                      onChange={(e) => onChange(e)}
+                      value={value.toString()}
+                    />
+                  )}
+                  name="dosagem"
+                  rules={{ required: 'Campo obrigatório' }}
+                  defaultValue={0}
                 />
                 <Text> ml</Text>
               </HStack>
@@ -138,7 +163,8 @@ function OccurenceModal({
               </FormControl.ErrorMessage>
             </FormControl>
           </VStack>
-          <FormControl>
+
+          <FormControl isRequired isInvalid={'cpf_paciente' in errors}>
             <VStack w="100%">
               <FormControl.Label fontWeight={600} mb={2} fontSize="md">
                 Selecione o paciente:
@@ -165,19 +191,19 @@ function OccurenceModal({
                   </Select>
                 )}
                 defaultValue={undefined}
-                name="paciente"
+                name="cpf_paciente"
                 rules={{ required: 'Campo obrigatório' }}
               />
 
               <FormControl.ErrorMessage
                 leftIcon={<WarningOutlineIcon size="xs" />}
               >
-                {errors.paciente?.message}
+                {errors.cpf_paciente?.message}
               </FormControl.ErrorMessage>
             </VStack>
           </FormControl>
 
-          <FormControl>
+          {/* <FormControl isRequired isInvalid={'horario' in errors}>
             <VStack w="100%">
               <FormControl.Label>Horário:</FormControl.Label>
               <Controller
@@ -194,7 +220,7 @@ function OccurenceModal({
                 rules={{ required: 'Campo obrigatório' }}
               />
             </VStack>
-          </FormControl>
+          </FormControl> */}
           <HStack space={2}>
             <Button
               borderRadius="36px"
@@ -208,7 +234,7 @@ function OccurenceModal({
             <Button
               colorScheme="green"
               borderRadius="36px"
-              onPress={handleSubmit(handleConfirm)}
+              onPress={handleSubmit(handleConfirm, handleInvalid)}
             >
               <Text marginX="16px" marginY="-2px">
                 Enviar

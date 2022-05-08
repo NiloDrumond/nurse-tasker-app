@@ -1,6 +1,5 @@
-export type UserRole = 'nurse' | 'doctor';
+import { IUser } from '@/modules/shared/interfaces';
 
-export interface UserContextData {
-  userId: string;
-  role: UserRole;
-}
+export type UserProviderProps = {
+  user: IUser;
+};

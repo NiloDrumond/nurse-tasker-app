@@ -20,7 +20,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
     { refreshInterval: 5000 },
   );
 
-  const { role } = useUser();
+  const { funcao } = useUser();
   const handleCreate = React.useCallback(() => {
     navigation.navigate('PrescriptionModal', {
       onConfirm: () => {
@@ -45,7 +45,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
           <Text fontSize="2xl" color="black">
             Minhas Prescrições
           </Text>
-          {role === 'doctor' && (
+          {funcao === 'M' && (
             <Button w="full" onPress={handleCreate}>
               Criar Prescrição
             </Button>

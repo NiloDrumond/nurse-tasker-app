@@ -1,8 +1,8 @@
+import { IUser } from '@/modules/shared/interfaces';
 import { useContext } from 'react';
 import { UserContext } from './User.provider';
-import { UserContextData } from './User.types';
 
-export function useUser(): UserContextData {
+export function useUser(): IUser {
   const context = useContext(UserContext);
 
   if (!context) {
