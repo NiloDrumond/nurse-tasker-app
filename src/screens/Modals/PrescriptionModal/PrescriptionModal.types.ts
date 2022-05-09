@@ -13,3 +13,5 @@ export type CreatePrescriptionData = Pick<
 >;
 
 export type PatchPrescriptionData = Partial<IPrescription>;
+
+export type ChangeResponsibleData = Partial<IPrescription>;

@@ -1,10 +1,13 @@
+import config from '@/config';
+import api from '@/modules/shared/http/ApiHelper';
+
 async function changeResponsibleService(
-  data: CreatePrescriptionData,
-  cpf: string,
+  newResposible: string,
+  data:
 ) {
   await api.post({
-    url: config.PRESCRIPTIONS_URL,
-    body: { ...data, cpf_cadastrante: cpf },
+    url: `${config.PRESCRIPTIONS_URL}/${newResposible}`,
+    body: { ...data, },
   });
 }
 
