@@ -29,7 +29,10 @@ const theme = extendTheme({
     mono: 'Hind',
   },
   colors: {
-    background: { box: '#E3E3E3' },
+    background: {
+      box: '#E3E3E3',
+      green: '#05E300',
+    },
     green: { button: '#8DDCBF' },
     red: { button: '#DC8D8D' },
   },

@@ -17,6 +17,8 @@ import useSWR from 'swr';
 import { IUser } from '@/modules/shared/interfaces';
 import api from '@/modules/shared/http/ApiHelper';
 import config from '@/config';
+import { useData } from '@/hooks/Data/useAuth';
+import { useUser } from '@/hooks/User/useUser';
 
 function RepassModal({
   route,
@@ -25,14 +27,13 @@ function RepassModal({
   const { onCancel, onConfirm, subtitle, title } = route.params;
   const { current } = useCardAnimation();
 
-  const { data } = useSWR<IUser[]>(
-    config.PRESCRIPTIONS_URL,
-    async (url) => {
-      const response = await api.get<IUser[]>({ url });
-      return response.body;
-    },
-    { refreshInterval: 5000 },
-  );
+  const { users } = useData();
+
+  const { funcao } = useUser();
+
+  const data = React.useMemo(() => {
+    return Object.values(users).filter((user) => user.funcao === funcao);
+  }, [funcao, users]);
 
   const handleChoice = React.useCallback(
     (choice: string) => {
