@@ -1,7 +1,7 @@
 import React from 'react';
-import { Center, Text, View, VStack, FlatList, Button } from 'native-base';
+import { Center, Text, View, VStack, Button } from 'native-base';
 
-import { Animated, Pressable, StyleSheet, ListRenderItem } from 'react-native';
+import { Animated, Pressable, StyleSheet } from 'react-native';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps, useCardAnimation } from '@react-navigation/stack';
 import CloseButton from '@/components/CloseButton';
@@ -12,23 +12,36 @@ import useSWR from 'swr';
 import Loading from '@/components/Loading';
 import { getOccurrenceTypeText } from '@/utils/getOccurrenceTypeText';
 import { useData } from '@/hooks/Data/useAuth';
+import { useUser } from '@/hooks/User/useUser';
 
 function OccurrenceShowModal({
   navigation,
   route,
 }: StackScreenProps<AppStackParamList, 'OccurrenceShowModal'>) {
-  const { users, patients } = useData();
+  const { users } = useData();
+  const { CPF } = useUser();
   const {
-    params: { prescriptionId },
+    params: { prescription },
   } = route;
   const { current } = useCardAnimation();
   const { data } = useSWR<IOccurrence>(
-    `${config.OCCURRENCES_URL}${prescriptionId}`,
+    `${config.OCCURRENCES_URL}${prescription.id_prescricao}/`,
     async (url) => {
       const response = await api.get<IOccurrence>({ url });
       return response.body;
     },
   );
+
+  const onRepass = React.useCallback(() => {
+    navigation.navigate('RepassModal', {
+      onConfirm: () => {
+        navigation.goBack();
+      },
+      prescriptionId: prescription.id_prescricao,
+      subtitle: 'Selecione para quem quer repassar a atividade:',
+      title: 'Novo responsável:',
+    });
+  }, [prescription, navigation]);
 
   return (
     <View
@@ -61,7 +74,7 @@ function OccurrenceShowModal({
       >
         <VStack
           alignItems="center"
-          space="2"
+          space="lg"
           bg="white"
           borderRadius="16px"
           padding="16px 24px"
@@ -81,6 +94,11 @@ function OccurrenceShowModal({
               {/* <Text>Paciente: {patients[data.cpf_paciente].nome}</Text> */}
               <Text>Responsável: {users[data.usuario_cadastrante].nome}</Text>
               <Text>Descrição: {data.descricao}</Text>
+              {CPF === prescription.responsavel_atual && (
+                <Button mt={2} onPress={onRepass}>
+                  Repassar Ocorrência
+                </Button>
+              )}
             </>
           ) : (
             <Loading />

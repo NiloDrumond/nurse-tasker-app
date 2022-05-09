@@ -1,6 +1,7 @@
 export type RepassProps = {
-    title: string;
-    subtitle?: string;
-    onConfirm: () => void;
-    onCancel?: () => void;
+  title: string;
+  subtitle?: string;
+  prescriptionId: string;
+  onConfirm: () => void;
+  onCancel?: () => void;
 };

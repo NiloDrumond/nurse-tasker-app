@@ -23,16 +23,27 @@ const getTabHeight = (): number => {
 };
 
 function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
+  const { CPF, funcao } = useUser();
   const { data } = useSWR<IPrescription[]>(
     config.PRESCRIPTIONS_URL,
     async (url) => {
       const response = await api.get<IPrescription[]>({ url });
-      return _.sortBy(response.body, [(o) => o.horario_previsto]);
+      return _.sortBy(
+        response.body.filter((p) => {
+          if (funcao === 'E' && p.responsavel_atual === CPF) return true;
+          if (
+            funcao === 'M' &&
+            (p.responsavel_atual === CPF || p.cpf_cadastrante === CPF)
+          )
+            return true;
+          return false;
+        }),
+        [(o) => o.horario_previsto],
+      );
     },
     { refreshInterval: 5000 },
   );
 
-  const { funcao } = useUser();
   const handleCreate = React.useCallback(() => {
     navigation.navigate('PrescriptionModal', {
       onConfirm: () => {

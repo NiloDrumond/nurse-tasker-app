@@ -2,12 +2,12 @@ import config from '@/config';
 import api from '@/modules/shared/http/ApiHelper';
 
 async function changeResponsibleService(
-  newResposible: string,
-  data:
+  id_prescricao: string,
+  responsavel_atual: string,
 ) {
-  await api.post({
-    url: `${config.PRESCRIPTIONS_URL}/${newResposible}`,
-    body: { ...data, },
+  await api.patch({
+    url: `${config.PRESCRIPTIONS_URL}${id_prescricao}/`,
+    body: { responsavel_atual },
   });
 }
 

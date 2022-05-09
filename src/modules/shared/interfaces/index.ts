@@ -20,6 +20,7 @@ export interface IPrescription {
   patologia?: string;
   horario_previsto: Date;
   dosagem: number;
+  responsavel_atual: string;
   status_atual: PrescriptionStatus;
   cpf_paciente: string;
   cpf_cadastrante: string;

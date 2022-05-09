@@ -26,7 +26,7 @@ function PrescriptionTasksList({ tasks }: PrescriptionTasksListProps) {
           borderColor="#749B97"
           borderLeftWidth={1}
           borderStyle="solid"
-          left="50px"
+          left="52px"
           top="10%"
           h="80%"
         />

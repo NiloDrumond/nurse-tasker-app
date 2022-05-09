@@ -43,14 +43,15 @@ function NurseActions({ prescription }: NurseActionProps) {
       onConfirm: () => {
         console.log('ok');
       },
+      prescriptionId: prescription.id_prescricao,
       subtitle: 'Selecione para quem quer repassar a atividade:',
       title: 'Novo responsável:',
     });
-  }, []);
+  }, [prescription]);
 
   const onSeeOccurrence = React.useCallback(() => {
     navigation.navigate('OccurrenceShowModal', {
-      prescriptionId: prescription.id_prescricao,
+      prescription,
     });
   }, [prescription]);
 
@@ -112,7 +113,7 @@ function DoctorActions({ prescription }: DoctorActionProps) {
   );
   const onSeeOccurrences = React.useCallback(() => {
     navigation.navigate('OccurrenceShowModal', {
-      prescriptionId: prescription.id_prescricao,
+      prescription,
     });
   }, [prescription]);
 

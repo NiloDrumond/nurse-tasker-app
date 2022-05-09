@@ -16,34 +16,47 @@ import { Animated, Pressable, StyleSheet } from 'react-native';
 import { useData } from '@/hooks/Data/useAuth';
 import { useUser } from '@/hooks/User/useUser';
 import CloseButton from '@/components/CloseButton';
+import handleError from '@/utils/errors/handleError';
+import NAV from '@/services/navigation';
+import { changeResponsibleService } from '@/services/prescriptions/changeResponsibleService';
 
 function RepassModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'RepassModal'>) {
-  const { onCancel, title } = route.params;
+  const { onCancel, onConfirm, title, prescriptionId } = route.params;
   const { current } = useCardAnimation();
 
   const { users } = useData();
 
-  const { funcao } = useUser();
+  const { funcao, CPF } = useUser();
 
   const data = React.useMemo(() => {
-    return Object.values(users).filter((user) => user.funcao === funcao);
-  }, [funcao, users]);
+    return Object.values(users).filter(
+      (user) => user.funcao === funcao && user.CPF !== CPF,
+    );
+  }, [funcao, users, CPF]);
 
   const handleChoice = React.useCallback(
     (choice: string) => {
       navigation.navigate('AskModal', {
-        onConfirm: () => {
-          console.log('ok');
-          navigation.goBack();
+        onConfirm: async () => {
+          try {
+            await changeResponsibleService(prescriptionId, choice);
+            onConfirm();
+            navigation.goBack();
+          } catch {
+            handleError({
+              title: 'Erro!',
+              message: 'Falha ao mudar responsável',
+            });
+          }
         },
         subtitle: `Você deseja repassar sua atividade para ${choice}?`,
         title: 'Atenção!',
       });
     },
-    [navigation],
+    [navigation, prescriptionId],
   );
 
   const handleCancel = React.useCallback(() => {

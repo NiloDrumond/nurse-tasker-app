@@ -1,3 +1,5 @@
+import { IPrescription } from '@/modules/shared/interfaces';
+
 export type OccurrenceShowModalProps = {
-  prescriptionId: string;
+  prescription: IPrescription;
 };
