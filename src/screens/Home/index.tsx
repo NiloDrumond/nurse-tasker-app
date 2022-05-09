@@ -30,6 +30,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
       const response = await api.get<IPrescription[]>({ url });
       return _.sortBy(
         response.body.filter((p) => {
+          if (funcao === 'F' && p.responsavel_atual === CPF) return true;
           if (funcao === 'E' && p.responsavel_atual === CPF) return true;
           if (
             funcao === 'M' &&

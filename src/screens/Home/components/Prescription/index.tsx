@@ -2,10 +2,11 @@ import React from 'react';
 import { Text, HStack, VStack, Flex } from 'native-base';
 import { TouchableHighlight } from 'react-native';
 import { useUser } from '@/hooks/User/useUser';
-import { IPrescription } from '@/modules/shared/interfaces';
+import { IPrescription, ITask } from '@/modules/shared/interfaces';
 import { useData } from '@/hooks/Data/useAuth';
 import moment from 'moment';
 import { usePrescriptionBorderColor } from '@/utils/usePrescriptionBorderColor';
+import { getNextTaskStatus } from '@/utils/getNextTaskStatus';
 import { DoctorActions, NurseActions } from './Prescription.Actions';
 import PrescriptionTasksList from './Prescription.TasksList';
 
@@ -19,6 +20,21 @@ function Prescription({ prescription }: PrescriptionProps) {
   const [showDetails, setShowDetails] = React.useState(false);
 
   const prescriptionBorderColor = usePrescriptionBorderColor(prescription);
+
+  const tasks = React.useMemo<ITask[]>(() => {
+    if (['P', 'D', 'R'].includes(prescription.status_atual)) {
+      return [
+        ...prescription.tasks,
+        {
+          cpf_responsavel: prescription.responsavel_atual,
+          id_horario: '1',
+          prescricao_associado: prescription.id_prescricao,
+          status_correspondente: getNextTaskStatus(prescription),
+        },
+      ];
+    }
+    return prescription.tasks;
+  }, [prescription]);
 
   return (
     <TouchableHighlight onPress={() => setShowDetails(!showDetails)}>
@@ -35,7 +51,7 @@ function Prescription({ prescription }: PrescriptionProps) {
       >
         <HStack overflow="hidden" alignItems="center" space={4} w="100%">
           <Flex w="25%">
-            <Text color="black" fontSize="32px">
+            <Text color="black" fontSize="28px">
               {moment(prescription.horario_previsto).format('HH:mm')}
             </Text>
           </Flex>
@@ -52,10 +68,13 @@ function Prescription({ prescription }: PrescriptionProps) {
           </VStack>
         </HStack>
 
-        {showDetails && prescription.tasks.length > 0 && (
-          <PrescriptionTasksList tasks={prescription.tasks} />
+        {showDetails && tasks.length > 0 && (
+          <PrescriptionTasksList tasks={tasks} />
         )}
         {showDetails && funcao === 'E' && (
+          <NurseActions prescription={prescription} />
+        )}
+        {showDetails && funcao === 'F' && (
           <NurseActions prescription={prescription} />
         )}
         {showDetails && funcao === 'M' && (

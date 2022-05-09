@@ -45,6 +45,6 @@ export interface ITask {
   id_horario: string;
   prescricao_associado: string;
   status_correspondente: TaskStatus;
-  horario: Date;
+  horario?: Date;
   cpf_responsavel: string;
 }
