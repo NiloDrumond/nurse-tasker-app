@@ -13,18 +13,15 @@ import {
 } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
-import useSWR from 'swr';
-import { IUser } from '@/modules/shared/interfaces';
-import api from '@/modules/shared/http/ApiHelper';
-import config from '@/config';
 import { useData } from '@/hooks/Data/useAuth';
 import { useUser } from '@/hooks/User/useUser';
+import CloseButton from '@/components/CloseButton';
 
 function RepassModal({
   route,
   navigation,
 }: StackScreenProps<AppStackParamList, 'RepassModal'>) {
-  const { onCancel, onConfirm, subtitle, title } = route.params;
+  const { onCancel, title } = route.params;
   const { current } = useCardAnimation();
 
   const { users } = useData();
@@ -46,7 +43,7 @@ function RepassModal({
         title: 'Atenção!',
       });
     },
-    [onConfirm, navigation],
+    [navigation],
   );
 
   const handleCancel = React.useCallback(() => {
@@ -92,34 +89,27 @@ function RepassModal({
           w="100%"
           maxH="500px"
         >
-          <HStack w="100%">
+          <HStack w="100%" position="relative">
             <Text fontWeight={600} mb={2} fontSize="xl">
               {title}
             </Text>
-            <Button
-              colorScheme="transparent"
-              alignSelf="right"
-              p={0}
-              ml="auto"
-              onPress={handleCancel}
-            >
-              <CloseIcon />
-            </Button>
+            <CloseButton />
           </HStack>
 
           <FlatList
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Box borderBottomWidth={1} borderColor="coolGray.200">
+            renderItem={({ item, index }) => (
+              <Box
+                borderTopWidth={index === 0 ? 1 : 0}
+                borderBottomWidth={1}
+                borderColor="coolGray.200"
+              >
                 <Button
                   onPress={() => {
                     handleChoice(item.CPF);
                   }}
-                  colorScheme="transparent"
-                  _hover={{
-                    bg: '#00000070',
-                  }}
+                  variant="ghost"
                 >
                   <Text fontSize="md">{item.nome}</Text>
                 </Button>
