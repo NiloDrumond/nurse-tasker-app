@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/User/useUser';
 import { IPrescription } from '@/modules/shared/interfaces';
 import { useData } from '@/hooks/Data/useAuth';
 import moment from 'moment';
+import { usePrescriptionBorderColor } from '@/utils/usePrescriptionBorderColor';
 import { DoctorActions, NurseActions } from './Prescription.Actions';
 import PrescriptionTasksList from './Prescription.TasksList';
 
@@ -17,6 +18,8 @@ function Prescription({ prescription }: PrescriptionProps) {
   const { users, patients } = useData();
   const [showDetails, setShowDetails] = React.useState(false);
 
+  const prescriptionBorderColor = usePrescriptionBorderColor(prescription);
+
   return (
     <TouchableHighlight onPress={() => setShowDetails(!showDetails)}>
       <VStack
@@ -27,6 +30,8 @@ function Prescription({ prescription }: PrescriptionProps) {
         padding="16px 24px"
         borderRadius="md"
         overflow="hidden"
+        borderColor={prescriptionBorderColor}
+        borderWidth="3px"
       >
         <HStack overflow="hidden" alignItems="center" space={4} w="100%">
           <Flex w="25%">
