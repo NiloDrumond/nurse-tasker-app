@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { Button, Center, Text, VStack, FlatList } from 'native-base';
 import { AppStackParamList } from '@/services/navigation/navigation.types';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -26,7 +27,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
     config.PRESCRIPTIONS_URL,
     async (url) => {
       const response = await api.get<IPrescription[]>({ url });
-      return response.body;
+      return _.sortBy(response.body, [(o) => o.horario_previsto]);
     },
     { refreshInterval: 5000 },
   );

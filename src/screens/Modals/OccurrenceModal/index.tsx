@@ -126,6 +126,7 @@ function OccurrenceModal({
                   >
                     {occurrenceTypes.map((type) => (
                       <Select.Item
+                        key={type}
                         label={getOccurrenceTypeText(type)}
                         value={type}
                       />
@@ -153,7 +154,9 @@ function OccurrenceModal({
                   <TextArea
                     h={40}
                     value={value}
-                    onChange={onChange}
+                    onChangeText={onChange}
+                    multiline
+                    textAlignVertical="top"
                     placeholder="Descrição"
                     w="100%"
                   />

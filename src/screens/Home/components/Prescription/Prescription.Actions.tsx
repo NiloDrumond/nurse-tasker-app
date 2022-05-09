@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 import { Button, Flex, VStack, Text } from 'native-base';
 import navigation from '@/services/navigation';
@@ -10,6 +11,9 @@ type NurseActionProps = {
 };
 
 function NurseActions({ prescription }: NurseActionProps) {
+  const [canceled, setCanceled] = React.useState(
+    prescription.status_atual === 'C',
+  );
   const onPressConclusion = React.useCallback(() => {
     navigation.navigate('AskModal', {
       onConfirm: async () => {
@@ -24,10 +28,10 @@ function NurseActions({ prescription }: NurseActionProps) {
     });
   }, [prescription]);
 
-  const onPressOccurrence = React.useCallback(() => {
+  const onCreateOccurrence = React.useCallback(() => {
     navigation.navigate('OccurrenceModal', {
       onConfirm: () => {
-        console.log('ok');
+        setCanceled(true);
       },
       prescriptionId: prescription.id_prescricao,
       title: 'Formulário de ocorrência',
@@ -44,7 +48,24 @@ function NurseActions({ prescription }: NurseActionProps) {
     });
   }, []);
 
-  return (
+  const onSeeOccurrence = React.useCallback(() => {
+    navigation.navigate('OccurrenceShowModal', {
+      prescriptionId: prescription.id_prescricao,
+    });
+  }, [prescription]);
+
+  return canceled ? (
+    <Button
+      background="white"
+      color="black"
+      borderRadius="36px"
+      onPress={onSeeOccurrence}
+    >
+      <Text color="black" marginX="16px" marginY="-2px">
+        Ver Ocorrência
+      </Text>
+    </Button>
+  ) : (
     <VStack space="10px">
       <Button
         background="green.button"
@@ -61,7 +82,7 @@ function NurseActions({ prescription }: NurseActionProps) {
         background="red.button"
         color="black"
         borderRadius="36px"
-        onPress={onPressOccurrence}
+        onPress={onCreateOccurrence}
       >
         <Text color="black" marginX="16px" marginY="-2px">
           Registrar Ocorrência
@@ -86,25 +107,46 @@ type DoctorActionProps = {
 };
 
 function DoctorActions({ prescription }: DoctorActionProps) {
+  const [canceled, setCanceled] = React.useState(
+    prescription.status_atual === 'C',
+  );
   const onSeeOccurrences = React.useCallback(() => {
-    navigation.navigate('OccurrencesListModal', {
+    navigation.navigate('OccurrenceShowModal', {
       prescriptionId: prescription.id_prescricao,
     });
   }, [prescription]);
 
-  return (
-    <VStack space="10px">
-      <Button
-        background="white"
-        color="black"
-        borderRadius="36px"
-        onPress={onSeeOccurrences}
-      >
-        <Text color="black" marginX="16px" marginY="-2px">
-          Ver Ocorrências
-        </Text>
-      </Button>
-    </VStack>
+  const onCreateOccurrence = React.useCallback(() => {
+    navigation.navigate('OccurrenceModal', {
+      onConfirm: () => {
+        setCanceled(true);
+      },
+      prescriptionId: prescription.id_prescricao,
+      title: 'Formulário de ocorrência',
+    });
+  }, [prescription]);
+
+  return canceled ? (
+    <Button
+      background="white"
+      color="black"
+      borderRadius="36px"
+      onPress={onSeeOccurrences}
+    >
+      <Text color="black" marginX="16px" marginY="-2px">
+        Ver Ocorrência
+      </Text>
+    </Button>
+  ) : (
+    <Button
+      onPress={onCreateOccurrence}
+      colorScheme="orange"
+      borderRadius="36px"
+    >
+      <Text color="white" marginX="16px" marginY="-2px">
+        Criar Ocorrência
+      </Text>
+    </Button>
   );
 }
 

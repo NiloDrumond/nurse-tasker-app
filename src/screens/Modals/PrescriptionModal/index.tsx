@@ -185,7 +185,13 @@ function OccurrenceModal({
                       onValueChange={(itemValue) => onChange(itemValue)}
                     >
                       {data.map((p) => {
-                        return <Select.Item label={p.nome} value={p.CPF} />;
+                        return (
+                          <Select.Item
+                            key={p.CPF}
+                            label={p.nome}
+                            value={p.CPF}
+                          />
+                        );
                       })}
                     </Select>
                   )}

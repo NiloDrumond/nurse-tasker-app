@@ -9,42 +9,25 @@ import { IOccurrence } from '@/modules/shared/interfaces';
 import config from '@/config';
 import api from '@/modules/shared/http/ApiHelper';
 import useSWR from 'swr';
-import OccurrencesListModalItem from './OccurrencesListModal.Item';
+import Loading from '@/components/Loading';
+import { getOccurrenceTypeText } from '@/utils/getOccurrenceTypeText';
+import { useData } from '@/hooks/Data/useAuth';
 
-function OccurrencesListModal({
+function OccurrenceShowModal({
   navigation,
   route,
-}: StackScreenProps<AppStackParamList, 'OccurrencesListModal'>) {
+}: StackScreenProps<AppStackParamList, 'OccurrenceShowModal'>) {
+  const { users, patients } = useData();
   const {
     params: { prescriptionId },
   } = route;
   const { current } = useCardAnimation();
-  const { data } = useSWR<IOccurrence[]>(
+  const { data } = useSWR<IOccurrence>(
     `${config.OCCURRENCES_URL}${prescriptionId}`,
     async (url) => {
-      const response = await api.get<IOccurrence[]>({ url });
+      const response = await api.get<IOccurrence>({ url });
       return response.body;
     },
-    { refreshInterval: 5000 },
-  );
-
-  const handleCreate = React.useCallback(() => {
-    navigation.navigate('OccurrenceModal', {
-      onConfirm: () => {
-        console.log('ok');
-      },
-      prescriptionId,
-      title: 'Formulário de ocorrência',
-    });
-  }, [navigation, prescriptionId]);
-
-  const renderItem: ListRenderItem<IOccurrence> = React.useCallback(
-    ({ item }) => {
-      return (
-        <OccurrencesListModalItem key={item.id_ocorrencia} occurrence={item} />
-      );
-    },
-    [],
   );
 
   return (
@@ -84,24 +67,28 @@ function OccurrencesListModal({
           padding="16px 24px"
           w="100%"
         >
-          <Center w="100%" position="relative">
-            <Text fontSize="2xl" color="black">
-              Ocorrências
-            </Text>
+          <Center position="relative" w="100%">
+            <Text fontSize="lg">Ocorrência</Text>
             <CloseButton />
           </Center>
-          <Button w="100%" onPress={handleCreate}>
-            Criar Ocorrência
-          </Button>
-          <FlatList
-            keyExtractor={(item) => item.id_ocorrencia}
-            data={data}
-            renderItem={renderItem}
-          />
+          {data ? (
+            <>
+              <Center w="100%">
+                <Text fontSize="lg" fontWeight={700}>
+                  {getOccurrenceTypeText(data.tipo)}
+                </Text>
+              </Center>
+              {/* <Text>Paciente: {patients[data.cpf_paciente].nome}</Text> */}
+              <Text>Responsável: {users[data.usuario_cadastrante].nome}</Text>
+              <Text>Descrição: {data.descricao}</Text>
+            </>
+          ) : (
+            <Loading />
+          )}
         </VStack>
       </Animated.View>
     </View>
   );
 }
 
-export default OccurrencesListModal;
+export default OccurrenceShowModal;

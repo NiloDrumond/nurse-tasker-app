@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Box, View } from 'native-base';
+import { FlatList, Box, View, Text } from 'native-base';
 import { ITask } from '@/modules/shared/interfaces';
 import { ListRenderItem } from 'react-native';
 import PrescriptionTask from './Prescription.Task';
@@ -15,7 +15,11 @@ function PrescriptionTasksList({ tasks }: PrescriptionTasksListProps) {
 
   return (
     <View>
-      <FlatList data={tasks} renderItem={renderItem} />
+      <FlatList
+        keyExtractor={(item) => item.id_horario}
+        data={tasks}
+        renderItem={renderItem}
+      />
       {tasks.length > 1 && (
         <Box
           position="absolute"

@@ -11,26 +11,27 @@ type DatePickerProps = {
 };
 
 function DatePicker({ onChange, value }: DatePickerProps) {
-  const { isOpen, onClose, onOpen } = useDisclose();
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const handleChange = React.useCallback(
     (date?: Date) => {
       onChange(date);
-      if (Platform.OS === 'android') {
-        onClose();
-      }
+      setIsOpen(false);
     },
-    [onChange, onClose],
+    [onChange],
   );
 
   return isOpen ? (
     <DateTimePicker
       value={value || new Date()}
       mode="time"
-      onChange={(_e: any, date?: Date) => handleChange(date)}
+      onChange={(_e: any, date?: Date) => {
+        setIsOpen(Platform.OS === 'ios');
+        handleChange(date);
+      }}
     />
   ) : (
-    <Button onPress={onOpen}>
+    <Button onPress={() => setIsOpen(true)}>
       {value ? moment(value).format('HH:mm') : 'Selecione um horário'}
     </Button>
   );

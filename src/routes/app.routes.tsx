@@ -8,6 +8,7 @@ import PrescriptionModal from '@/screens/Modals/PrescriptionModal';
 import OccurrencesListModal from '@/screens/Modals/OccurrencesListModal';
 import { useData } from '@/hooks/Data/useAuth';
 import LoadingScreen from '@/screens/Loading';
+import OccurrenceShowModal from '@/screens/Modals/OccurrenceShowModal';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,13 @@ function AppRoutes() {
         }}
         name="OccurrencesListModal"
         component={OccurrencesListModal}
+      />
+      <Stack.Screen
+        options={{
+          presentation: 'transparentModal',
+        }}
+        name="OccurrenceShowModal"
+        component={OccurrenceShowModal}
       />
       <Stack.Screen
         options={{

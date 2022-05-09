@@ -20,11 +20,11 @@ function PrescriptionTask({ task }: PrescriptionTaskProps) {
       <View
         width="12px"
         height="12px"
-        borderRadius="50%"
+        borderRadius="6px"
         backgroundColor="#749B97"
       />
-      <VStack flex={1}>
-        <Text color="black" fontSize="10px" fontWeight="bold">
+      <VStack>
+        <Text color="black" fontSize="10px" fontWeight={600}>
           {getTaskStatusText(task.status_correspondente)}
         </Text>
         <Text color="black" fontSize="10px">

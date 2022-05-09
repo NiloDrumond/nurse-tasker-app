@@ -22,7 +22,7 @@ function Prescription({ prescription }: PrescriptionProps) {
       <VStack
         mb={2}
         alignItems="center"
-        space="28px"
+        space="2"
         bg="background.box"
         padding="16px 24px"
         borderRadius="md"
@@ -47,13 +47,15 @@ function Prescription({ prescription }: PrescriptionProps) {
           </VStack>
         </HStack>
 
-        {showDetails && <PrescriptionTasksList tasks={prescription.tasks} />}
-        {showDetails &&
-          (funcao === 'E' ? (
-            <NurseActions prescription={prescription} />
-          ) : (
-            <DoctorActions prescription={prescription} />
-          ))}
+        {showDetails && prescription.tasks.length > 0 && (
+          <PrescriptionTasksList tasks={prescription.tasks} />
+        )}
+        {showDetails && funcao === 'E' && (
+          <NurseActions prescription={prescription} />
+        )}
+        {showDetails && funcao === 'M' && (
+          <DoctorActions prescription={prescription} />
+        )}
       </VStack>
     </TouchableHighlight>
   );
