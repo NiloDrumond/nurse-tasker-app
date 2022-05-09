@@ -69,6 +69,7 @@ function Home({ navigation }: StackScreenProps<AppStackParamList, 'Home'>) {
           <FlatList
             w="100%"
             data={data}
+            keyExtractor={(item) => item.id_prescricao}
             renderItem={({ item }: ListRenderItemInfo<IPrescription>) => (
               <Prescription key={item.id_prescricao} prescription={item} />
             )}
